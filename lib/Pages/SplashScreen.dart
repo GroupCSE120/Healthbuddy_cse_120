@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_buddy/Binders/getStarted_binder.dart';
 import 'package:health_buddy/Pages/GetStarted.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _SplashscreenState extends State<Splashscreen> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 2), () {
-      Get.off(const Getstarted());
+      Get.off(const Getstarted(), binding: GetStartedBinder());
     });
   }
 
