@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:health_buddy/Pages/GetStarted.dart';
+import 'package:health_buddy/Pages/get_started.dart';
 
-class Splashscreen extends StatefulWidget {
-  const Splashscreen({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<Splashscreen> createState() => _SplashscreenState();
+  State<SplashScreen> createState() => _SplashScreen();
 }
 
-class _SplashscreenState extends State<Splashscreen> {
-
+class _SplashScreen extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
