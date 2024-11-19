@@ -1,32 +1,32 @@
 class FoodModal{
-  String FoodName;
-  double GlycemicIndex;
-  double Calories;
-  double Carbohydrates;
-  double Protiens;
-  double Fats;
-  double Sodium;
-  double Pottasium;
-  double Magnesium;
-  double Calcium ;
-  double Fiber;
-  bool Sugar;
-  bool BP;
+  String foodName;
+  double glycemicIndex;
+  double calories;
+  double carbohydrates;
+  double protiens;
+  double fats;
+  double sodium;
+  double pottasium;
+  double magnesium;
+  double calcium ;
+  double fiber;
+  bool sugar;
+  bool bp;
 
   FoodModal({
-    required this.FoodName,
-    required this.GlycemicIndex,
-    required this.Calories,
-    required this.Carbohydrates,
-    required this.Protiens,
-    required this.Fats,
-    required this.Sodium,
-    required this.Pottasium,
-    required this.Magnesium,
-    required this.Calcium,
-    required this.Fiber,
-    required this.Sugar,
-    required this.BP,
+    required this.foodName,
+    required this.glycemicIndex,
+    required this.calories,
+    required this.carbohydrates,
+    required this.protiens,
+    required this.fats,
+    required this.sodium,
+    required this.pottasium,
+    required this.magnesium,
+    required this.calcium,
+    required this.fiber,
+    required this.sugar,
+    required this.bp,
 
   });
 

@@ -23,19 +23,19 @@ class LoadData {
       var row = _csvList[i];
       try {
         foodList.add(FoodModal(
-          FoodName: row[0] as String,
-          GlycemicIndex: (row[1] as num).toDouble(),
-          Calories: (row[2] as num).toDouble(),
-          Carbohydrates: (row[3] as num).toDouble(),
-          Protiens: (row[4] as num).toDouble(),
-          Fats: (row[5] as num).toDouble(),
-          Sodium: (row[8] as num).toDouble(),
-          Pottasium: (row[9] as num).toDouble(),
-          Magnesium: (row[10] as num).toDouble(),
-          Calcium: (row[11] as num).toDouble(),
-          Fiber: (row[12] as num).toDouble(),
-          Sugar: row[6] == 1,
-          BP: row[7] == 1,
+          foodName: row[0] as String,
+          glycemicIndex: (row[1] as num).toDouble(),
+          calories: (row[2] as num).toDouble(),
+          carbohydrates: (row[3] as num).toDouble(),
+          protiens: (row[4] as num).toDouble(),
+          fats: (row[5] as num).toDouble(),
+          sodium: (row[8] as num).toDouble(),
+          pottasium: (row[9] as num).toDouble(),
+          magnesium: (row[10] as num).toDouble(),
+          calcium: (row[11] as num).toDouble(),
+          fiber: (row[12] as num).toDouble(),
+          sugar: row[6] == 1,
+          bp: row[7] == 1,
         ));
       } catch (e) {
         print("Error parsing row $i: $e");
