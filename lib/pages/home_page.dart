@@ -26,10 +26,16 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: colors.darkBg,
         title: Text(
-          "Health Buddy",
-          style: TextStyle(color: colors.lightBlue),
+          '',
+          style: TextStyle(color: colors.lightBlue, fontSize: 24),
         ),
-        centerTitle: true,
+        actions: [
+          CircleAvatar(
+            backgroundColor: Colors.white,
+            child: Icon(Icons.person, color: Colors.black,),
+          ),
+          SizedBox(width: 20,)
+        ],
       ),
       body: _pages[_selectedIndex], // Display the selected page
       bottomNavigationBar: Container(
