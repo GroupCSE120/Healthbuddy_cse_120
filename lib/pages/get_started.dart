@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_buddy/binders/home_binder.dart';
 import 'package:health_buddy/constants/app_color.dart';
 import 'package:health_buddy/Controllers/getStarted_controller.dart';
 import 'package:health_buddy/pages/home_page.dart';
 
-class Getstarted extends StatelessWidget {
-  const Getstarted({super.key});
+class GetStarted extends StatelessWidget {
+  const GetStarted({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final AppColors colors = AppColors();
-
     return GetBuilder<GetStartedController>(builder: (controller) {
       return Scaffold(
-        backgroundColor: colors.darkBg,
+        backgroundColor: AppColors.darkBg,
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
           child: Column(
@@ -24,7 +23,7 @@ class Getstarted extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: colors.lightBlue,
+                  color: AppColors.lightBlue,
                 ),
               ),
               const SizedBox(height: 8),
@@ -40,14 +39,15 @@ class Getstarted extends StatelessWidget {
               // Name Field
               Container(
                 decoration: BoxDecoration(
-                  color: colors.darkBlue.withOpacity(0.2),
+                  color: AppColors.darkBlue.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: colors.lightBlue, width: 1.5),
+                  border: Border.all(color: AppColors.lightBlue, width: 1.5),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 child: TextFormField(
                   style: const TextStyle(color: Colors.white),
-                  onChanged: (value) => controller.name.value = value,
+                  controller: controller.nameController,
                   decoration: const InputDecoration(
                     labelText: 'Name',
                     prefixIcon: Icon(Icons.person, color: Colors.white),
@@ -59,36 +59,37 @@ class Getstarted extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Date of Birth Field
-              Obx(
-                    () => Container(
-                  decoration: BoxDecoration(
-                    color: colors.darkBlue.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: colors.lightBlue, width: 1.5),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  child: TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    readOnly: true,
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: controller.dob.value,
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime.now(),
-                      );
-                      if (pickedDate != null) {
-                        controller.dob.value = pickedDate;
-                      }
-                    },
-                    decoration: InputDecoration(
-                      labelText:
-                      'Date of Birth: ${controller.dob.value.toLocal().toString().split(' ')[0]}',
-                      prefixIcon:
-                      const Icon(Icons.calendar_today, color: Colors.white),
-                      labelStyle: const TextStyle(color: Colors.white),
-                      border: InputBorder.none,
-                    ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.darkBlue.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.lightBlue, width: 1.5),
+                ),
+                padding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                child: TextFormField(
+
+                  style: const TextStyle(color: Colors.white),
+                  readOnly: true,
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: controller.dob,
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    );
+                    if (pickedDate != null) {
+                      controller.dob = pickedDate;
+                      controller.update();
+                    }
+                  },
+                  decoration: InputDecoration(
+                    labelText:
+                    'Date of Birth: ${controller.dob.toString().split(' ')[0]}',
+                    prefixIcon:
+                    const Icon(Icons.calendar_today, color: Colors.white),
+                    labelStyle: const TextStyle(color: Colors.white),
+                    border: InputBorder.none,
                   ),
                 ),
               ),
@@ -97,16 +98,17 @@ class Getstarted extends StatelessWidget {
               // Sex Field
               Container(
                 decoration: BoxDecoration(
-                  color: colors.darkBlue.withOpacity(0.2),
+                  color: AppColors.darkBlue.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: colors.lightBlue, width: 1.5),
+                  border: Border.all(color: AppColors.lightBlue, width: 1.5),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 child: DropdownButtonFormField<String>(
                   value: null,
-                  dropdownColor: colors.darkBg,
+                  dropdownColor: AppColors.darkBg,
                   style: const TextStyle(color: Colors.white),
-                  onChanged: (value) => controller.sex.value = value ?? '',
+                  onChanged: (value) => controller.sex = value ?? '',
                   decoration: const InputDecoration(
                     labelText: 'Sex',
                     prefixIcon: Icon(Icons.transgender, color: Colors.white),
@@ -116,10 +118,10 @@ class Getstarted extends StatelessWidget {
                   items: ['Male', 'Female', 'Other']
                       .map(
                         (sex) => DropdownMenuItem(
-                      value: sex,
-                      child: Text(sex),
-                    ),
-                  )
+                          value: sex,
+                          child: Text(sex),
+                        ),
+                      )
                       .toList(),
                 ),
               ),
@@ -131,15 +133,17 @@ class Getstarted extends StatelessWidget {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: colors.darkBlue.withOpacity(0.2),
+                        color: AppColors.darkBlue.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: colors.lightBlue, width: 1.5),
+                        border:
+                            Border.all(color: AppColors.lightBlue, width: 1.5),
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: TextFormField(
+                        controller: controller.heightController,
                         style: const TextStyle(color: Colors.white),
-                        onChanged: (value) => controller.height.value =
-                            double.tryParse(value) ?? 0.0,
+                        // onChanged: (value) => controller.height.value =
+                        //     double.tryParse(value) ?? 0.0,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           labelText: 'Height (cm)',
@@ -154,20 +158,22 @@ class Getstarted extends StatelessWidget {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: colors.darkBlue.withOpacity(0.2),
+                        color: AppColors.darkBlue.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: colors.lightBlue, width: 1.5),
+                        border:
+                            Border.all(color: AppColors.lightBlue, width: 1.5),
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: TextFormField(
+                        controller: controller.weightController,
                         style: const TextStyle(color: Colors.white),
-                        onChanged: (value) => controller.weight.value =
-                            double.tryParse(value) ?? 0.0,
+                        // onChanged: (value) => controller.weight.value =
+                        //     double.tryParse(value) ?? 0.0,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           labelText: 'Weight (kg)',
-                          prefixIcon: Icon(Icons.fitness_center,
-                              color: Colors.white),
+                          prefixIcon:
+                              Icon(Icons.fitness_center, color: Colors.white),
                           labelStyle: TextStyle(color: Colors.white),
                           border: InputBorder.none,
                         ),
@@ -183,29 +189,29 @@ class Getstarted extends StatelessWidget {
                 'Health Conditions',
                 style: TextStyle(
                   fontSize: 18,
-                  color: colors.lightBlue,
+                  color: AppColors.lightBlue,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Obx(
-                    () => Column(
-                  children: ['Diabetes', 'BP', 'Disability']
-                      .map(
-                        (condition) => CheckboxListTile(
-                      title: Text(
-                        condition,
-                        style: const TextStyle(color: Colors.white),
+              Column(
+                children: ['Diabetes', 'BP', 'Disability']
+                    .map(
+                      (condition) => CheckboxListTile(
+                        title: Text(
+                          condition,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        value: controller.healthMap[condition] ?? false,
+                        onChanged: (value) {
+                          controller.healthMap[condition] = value ?? false;
+                          controller.update();
+                        },
+                        activeColor: AppColors.green,
+                        checkColor: Colors.black,
+                        controlAffinity: ListTileControlAffinity.leading,
                       ),
-                      value: controller.healthMap[condition] ?? false,
-                      onChanged: (value) =>
-                      controller.healthMap[condition] = value ?? false,
-                      activeColor: colors.green,
-                      checkColor: Colors.black,
-                      controlAffinity: ListTileControlAffinity.leading,
-                    ),
-                  )
-                      .toList(),
-                ),
+                    )
+                    .toList(),
               ),
               const SizedBox(height: 24),
 
@@ -213,7 +219,7 @@ class Getstarted extends StatelessWidget {
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: colors.lightBlue,
+                    backgroundColor: AppColors.lightBlue,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 36, vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -222,7 +228,7 @@ class Getstarted extends StatelessWidget {
                   ),
                   onPressed: () {
                     controller.saveUserData();
-                    Get.off(const HomePage());
+                    Get.off(const HomePage(), binding: HomeBinder());
                   },
                   child: const Text(
                     'Get Started',

@@ -7,10 +7,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppColors colors = AppColors();
-
     return Scaffold(
-      backgroundColor: colors.darkBg,
+      backgroundColor: AppColors.darkBg,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
         child: Column(
@@ -33,7 +31,7 @@ class Home extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
-                          color: colors.lightBlue,
+                          color: AppColors.lightBlue,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -57,7 +55,7 @@ class Home extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
@@ -69,10 +67,10 @@ class Home extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(8.0),
               ),
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Row(
+                  const Row(
                     children: [
                       Icon(
                         Icons.person_outline,
@@ -81,7 +79,7 @@ class Home extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      const Text(
+                      Text(
                         textAlign: TextAlign.start,
                         'Mr. Arjun Kharade',
                         style: TextStyle(
@@ -97,29 +95,30 @@ class Home extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Card(
-                        color: colors.green,
+                        color: AppColors.green,
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text('height'),
                         ),
                       ),
                       Card(
-                        color: colors.green,
-                        child: Padding(
+                        color: AppColors.green,
+                        child: const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text('Weight'),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Text(
                     "BMI : ",
-                    style: TextStyle(fontSize: 24, color: colors.lightBlue),
+                    style: TextStyle(fontSize: 24, color: AppColors.lightBlue),
                   ),
-                  Text('note: BMI is in normal range, maintain it', style: TextStyle(color: Colors.green)),
+                  const Text('note: BMI is in normal range, maintain it',
+                      style: TextStyle(color: Colors.green)),
                 ],
               ),
             ),

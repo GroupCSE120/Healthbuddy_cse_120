@@ -1,111 +1,63 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:health_buddy/components/home.dart';
-import 'package:health_buddy/constants/app_color.dart';
+import 'package:get/get.dart';
+import 'package:health_buddy/sub_pages/another.dart';
+import 'package:health_buddy/sub_pages/diet.dart';
+import 'package:health_buddy/sub_pages/home.dart';
 
-class HomePage extends StatefulWidget {
+import '../Controllers/home_controller.dart';
+
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final AppColors colors = AppColors(); // Access the color palette
-  int _selectedIndex = 1; // Default selected index (Home)
-
-  final List<Widget> _pages = [
-    Center(child: Text("Health Tips", style: TextStyle(color: Colors.white))),
-    Home(),
-    Center(child: Text("Diet Plans", style: TextStyle(color: Colors.white))),
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: colors.darkBg,
-      appBar: AppBar(
-        backgroundColor: colors.darkBg,
-        title: Text(
-          '',
-          style: TextStyle(color: colors.lightBlue, fontSize: 24),
-        ),
-        actions: [
-          CircleAvatar(
-            backgroundColor: Colors.white,
-            child: Icon(Icons.person, color: Colors.black,),
+    return GetBuilder<HomeController>(
+      builder: (controller) {
+        return Scaffold(
+          body: PageView.builder(
+            controller: controller.pageController,
+            itemCount: 4,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return const Home();
+              } else if (index == 1) {
+                return const Diet();
+              } else if (index == 2) {
+                return const Another();
+              }
+              return const Center(child: Text("Error 404: Page Not Found"));
+            },
+            onPageChanged: (value) {
+              controller.currentPageIndex = value;
+              controller.update();
+            },
           ),
-          SizedBox(width: 20,)
-        ],
-      ),
-      body: _pages[_selectedIndex], // Display the selected page
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: colors.darkBlue,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
+          extendBody: true,
+          bottomNavigationBar: AnimatedBottomNavigationBar(
+            icons: const [
+              Icons.home_filled,
+              Icons.favorite_border_rounded,
+              Icons.settings_rounded,
+              Icons.person_rounded,
+            ],
+            activeIndex: controller.currentPageIndex,
+            onTap: (value) {
+              controller.changePage(value);
+            },
+            activeColor: Colors.amber,
+            inactiveColor: Colors.white54,
+            backgroundColor: const Color(0xff232327),
+            gapLocation: GapLocation.center,
+            notchSmoothness: NotchSmoothness.softEdge,
+            notchMargin: 12,
+            leftCornerRadius: 25,
+            rightCornerRadius: 25,
+            height: 65,
+            splashSpeedInMilliseconds: 250,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              offset: const Offset(0, -3),
-              blurRadius: 6,
-            )
-          ],
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          currentIndex: _selectedIndex,
-          selectedItemColor: colors.lightBlue,
-          unselectedItemColor: Colors.white.withOpacity(0.7),
-          showUnselectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-          items: [
-            _buildBarItem(
-              icon: Icons.local_hospital,
-              label: 'Health Tips',
-              isSelected: _selectedIndex == 0,
-            ),
-            _buildBarItem(
-              icon: Icons.home,
-              label: 'Home',
-              isSelected: _selectedIndex == 1,
-            ),
-            _buildBarItem(
-              icon: Icons.restaurant,
-              label: 'Diet Plans',
-              isSelected: _selectedIndex == 2,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  BottomNavigationBarItem _buildBarItem({
-    required IconData icon,
-    required String label,
-    required bool isSelected,
-  }) {
-    return BottomNavigationBarItem(
-      icon: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-        padding: isSelected ? const EdgeInsets.all(6) : EdgeInsets.zero,
-        decoration: isSelected
-            ? BoxDecoration(
-          color: colors.lightBlue.withOpacity(0.2),
-          shape: BoxShape.circle,
-        )
-            : null,
-        child: Icon(icon),
-      ),
-      label: label,
+        );
+      },
     );
   }
 }

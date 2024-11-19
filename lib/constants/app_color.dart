@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 class AppColors{
-  final Color darkBg = Color(0xff192b3a);
-  final Color lightBlue = Color(0xff12bfcc);
-  final Color darkBlue = Color(0xff005F79);
-  final Color green = Color(0xff7ED957);
-  final Color lightGreen = Color(0xffB7E4A8);
+  static Color darkBg = const Color(0xff192b3a);
+  static Color lightBlue = const Color(0xff12bfcc);
+  static Color darkBlue = const Color(0xff005F79);
+  static Color green = const Color(0xff7ED957);
+  static Color lightGreen = const Color(0xffB7E4A8);
 
 }

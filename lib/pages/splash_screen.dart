@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Navigate after delay
     Future.delayed(const Duration(seconds: 5), () {
-      Get.off(const Getstarted(), binding: GetStartedBinder());
+      Get.off(const GetStarted(), binding: GetStartedBinder());
     });
   }
 
@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors().darkBg,
+      backgroundColor: AppColors.darkBg,
       body: Center(
         child: FadeTransition(
           opacity: _fadeAnimation,
@@ -69,10 +69,10 @@ class _SplashScreenState extends State<SplashScreen>
                   height: 120,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppColors().lightBlue.withOpacity(0.2),
+                    color: AppColors.lightBlue.withOpacity(0.2),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors().darkBlue.withOpacity(0.5),
+                        color: AppColors.darkBlue.withOpacity(0.5),
                         blurRadius: 10,
                         spreadRadius: 2,
                         offset: const Offset(0, 5),
@@ -95,10 +95,10 @@ class _SplashScreenState extends State<SplashScreen>
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 32,
-                    color: AppColors().green,
+                    color: AppColors.green,
                     shadows: [
                       Shadow(
-                        color: AppColors().lightBlue,
+                        color: AppColors.lightBlue,
                         blurRadius: 10,
                         offset: Offset(0, 3),
                       ),
