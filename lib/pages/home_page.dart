@@ -24,9 +24,7 @@ class HomePage extends StatelessWidget {
                 return const Home();
               } else if (index == 1) {
                 return const Diet();
-              } else if (index == 2) {
-                return const Another();
-              } else if (index == 3){
+              } else if (index == 2){
                 return const Profile();
               }
               return const Center(child: Text("Error 404: Page Not Found"));
@@ -41,7 +39,6 @@ class HomePage extends StatelessWidget {
             icons: const [
               Icons.home_filled,
               Icons.favorite_border_rounded,
-              Icons.settings_rounded,
               Icons.person_rounded,
             ],
             activeIndex: controller.currentPageIndex,

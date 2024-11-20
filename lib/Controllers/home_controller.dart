@@ -132,7 +132,8 @@ class HomeController extends GetxController {
                       borderRadius: BorderRadius.circular(10)
                     ),
                     margin: const EdgeInsets.all(5),
-                    child: Row(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           foodList[index].foodName,
@@ -141,8 +142,19 @@ class HomeController extends GetxController {
                             fontSize: 20,
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                          children: [
+                            Text('Calories : ${foodList[index].calories}',style: TextStyle(color: Colors.green),),
+                            Text('Proteins : ${foodList[index].protiens}',style: TextStyle(color: Colors.yellow),),
+                            Text('Fats : ${foodList[index].fats}',style: TextStyle(color: Colors.blue ),),
+
+                          ],
+                        ),
                       ],
                     ),
+
                   );
                 },
               )

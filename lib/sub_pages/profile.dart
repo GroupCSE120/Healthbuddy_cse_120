@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:health_buddy/Controllers/home_controller.dart';
 import 'package:health_buddy/constants/app_color.dart';
 
-import 'edit_profile.dart';
+import 'profilehelper/edit_profile.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -18,6 +18,7 @@ class Profile extends StatelessWidget {
               padding: EdgeInsets.all(8.0),
               child: Column(
                 children: [
+                  SizedBox(height: 30,),
                   Stack(
                     children: [
                       SizedBox(
@@ -26,7 +27,7 @@ class Profile extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
                           child: Image(
-                              image: AssetImage("assets/images/logo.jpg")),
+                              image: AssetImage("assets/images/doctor-5216835_640.webp")),
                         ),
                       ),
                       Positioned(
@@ -71,12 +72,83 @@ class Profile extends StatelessWidget {
                           side: BorderSide.none,
                           shape: const StadiumBorder(),
                         ),
-                        child: Text('Edit Profile', style: TextStyle(color: AppColors.darkBg),)
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text('Edit Profile', style: TextStyle(color: AppColors.darkBg, fontSize: 18,),),
+                            Icon(Icons.edit, color: AppColors.bgColor,),
+                          ],
+                        )
                     ),
                   ),
                   SizedBox(height: 30,),
                   const Divider(),
                   SizedBox(height: 10,),
+                  InkWell(
+                    onTap: (){
+
+                    },
+                    child: Card(
+                      color: AppColors.cardColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.gavel_outlined, color: Colors.white,),
+                            SizedBox(width: 30,),
+                            Text('Set Goals', style: TextStyle(fontSize: 24, color: Colors.white),),
+                            SizedBox(width: 30,),
+                            IconButton(onPressed: (){}, icon: Icon(Icons.chevron_right, color: Colors.white,)),
+                          ],
+
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  InkWell(
+                    onTap: (){
+
+                    },
+                    child: Card(
+                      color: AppColors.cardColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.list_alt_outlined, color: Colors.white,),
+                            SizedBox(width: 30,),
+                            Text('Create Food Lists', style: TextStyle(fontSize: 24, color: Colors.white),),
+                            SizedBox(width: 30,),
+                            IconButton(onPressed: (){}, icon: Icon(Icons.chevron_right, color: Colors.white,)),
+                          ],
+
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  InkWell(
+                    onTap: (){
+
+                    },
+                    child: Card(
+                      color: AppColors.cardColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.note_alt_sharp, color: Colors.white,),
+                            SizedBox(width: 30,),
+                            Text('Personal Notes', style: TextStyle(fontSize: 24, color: Colors.white),),
+                            SizedBox(width: 30,),
+                            IconButton(onPressed: (){}, icon: Icon(Icons.chevron_right, color: Colors.white,)),
+                          ],
+
+                        ),
+                      ),
+                    ),
+                  )
 
 
 
