@@ -64,11 +64,17 @@ class HomeController extends GetxController {
 
   void addItemsToMealList(List<FoodModal> food, int mealCount) {      // Use this to add items to list
     if (mealCount == 0) {
-      breakfastItems.forEach((element) => food.add(element),);
+      for (var element in breakfastItems) {
+        food.add(element);
+      }
     } else if (mealCount == 1) {
-      dinnerItems.forEach((element) => food.add(element),);
+      for (var element in dinnerItems) {
+        food.add(element);
+      }
     } else if (mealCount == 3) {
-      lunchItems.forEach((element) => food.add(element),);
+      for (var element in lunchItems) {
+        food.add(element);
+      }
     }
     update();
   }

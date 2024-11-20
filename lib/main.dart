@@ -6,12 +6,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-
-  Hive.registerAdapter(UserModalAdapter());
-  // var box = await Hive.openBox<UserModal>('userBox');
-
-  runApp(const MyApp());
+  try {
+    await Hive.initFlutter();
+    Hive.registerAdapter(UserModalAdapter());
+    debugPrint('Initializing the app: ${Hive.isAdapterRegistered(0)}');
+    runApp(const MyApp());
+  } catch (e) {
+    debugPrint('Error initializing the app: $e');
+  }
+  //
+  // runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

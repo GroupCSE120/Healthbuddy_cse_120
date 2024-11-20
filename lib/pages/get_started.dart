@@ -12,12 +12,13 @@ class GetStarted extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<GetStartedController>(builder: (controller) {
       return Scaffold(
-        backgroundColor: AppColors.darkBg,
+        backgroundColor: AppColors.bgColor,
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 30),
               Text(
                 'Let\'s Get Started!',
                 style: TextStyle(
@@ -31,154 +32,81 @@ class GetStarted extends StatelessWidget {
                 'Please fill out the following details:',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.white.withOpacity(0.8),
+                  color: Colors.white.withOpacity(0.65),
                 ),
               ),
               const SizedBox(height: 24),
 
-              // Name Field
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.darkBlue.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.lightBlue, width: 1.5),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  controller: controller.nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Name',
-                    prefixIcon: Icon(Icons.person, color: Colors.white),
-                    labelStyle: TextStyle(color: Colors.white),
-                    border: InputBorder.none,
+              textfieldWidget(controller.nameController, "Name", Icons.person,
+                  TextInputType.name),
+              const SizedBox(height: 24),
+
+              textfieldWidget(controller.dobController, "Date of Birth",
+                  Icons.person, TextInputType.datetime, isReadOnly: true,
+                  action: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: controller.dob,
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime.now(),
+                );
+                if (pickedDate != null) {
+                  controller.dob = pickedDate;
+                  controller.dobController.text =
+                      controller.dob.toString().split(' ')[0];
+                  controller.update();
+                }
+              }),
+              const SizedBox(height: 24),
+
+              DropdownButtonFormField<String>(
+                value: null,
+                dropdownColor: AppColors.darkBg,
+                style: const TextStyle(color: Colors.white),
+                onChanged: (value) => controller.sex = value ?? '',
+                decoration: InputDecoration(
+                  labelText: 'Sex',
+                  prefixIcon:
+                      const Icon(Icons.transgender, color: Colors.white),
+                  labelStyle: const TextStyle(color: Colors.white),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    borderSide:
+                        BorderSide(color: AppColors.lightBlue, width: 2),
                   ),
                 ),
+                items: ['Male', 'Female', 'Other']
+                    .map(
+                      (sex) => DropdownMenuItem(
+                        value: sex,
+                        child: Text(sex),
+                      ),
+                    )
+                    .toList(),
               ),
-              const SizedBox(height: 16),
 
-              // Date of Birth Field
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.darkBlue.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.lightBlue, width: 1.5),
-                ),
-                padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                child: TextFormField(
+              const SizedBox(height: 24),
 
-                  style: const TextStyle(color: Colors.white),
-                  readOnly: true,
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: controller.dob,
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime.now(),
-                    );
-                    if (pickedDate != null) {
-                      controller.dob = pickedDate;
-                      controller.update();
-                    }
-                  },
-                  decoration: InputDecoration(
-                    labelText:
-                    'Date of Birth: ${controller.dob.toString().split(' ')[0]}',
-                    prefixIcon:
-                    const Icon(Icons.calendar_today, color: Colors.white),
-                    labelStyle: const TextStyle(color: Colors.white),
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Sex Field
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.darkBlue.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.lightBlue, width: 1.5),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                child: DropdownButtonFormField<String>(
-                  value: null,
-                  dropdownColor: AppColors.darkBg,
-                  style: const TextStyle(color: Colors.white),
-                  onChanged: (value) => controller.sex = value ?? '',
-                  decoration: const InputDecoration(
-                    labelText: 'Sex',
-                    prefixIcon: Icon(Icons.transgender, color: Colors.white),
-                    labelStyle: TextStyle(color: Colors.white),
-                    border: InputBorder.none,
-                  ),
-                  items: ['Male', 'Female', 'Other']
-                      .map(
-                        (sex) => DropdownMenuItem(
-                          value: sex,
-                          child: Text(sex),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Height and Weight Fields
               Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.darkBlue.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(12),
-                        border:
-                            Border.all(color: AppColors.lightBlue, width: 1.5),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: TextFormField(
-                        controller: controller.heightController,
-                        style: const TextStyle(color: Colors.white),
-                        // onChanged: (value) => controller.height.value =
-                        //     double.tryParse(value) ?? 0.0,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Height (cm)',
-                          prefixIcon: Icon(Icons.height, color: Colors.white),
-                          labelStyle: TextStyle(color: Colors.white),
-                          border: InputBorder.none,
-                        ),
-                      ),
+                    child: textfieldWidget(
+                      controller.heightController,
+                      "Height (cm)",
+                      Icons.height,
+                      TextInputType.number,
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.darkBlue.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(12),
-                        border:
-                            Border.all(color: AppColors.lightBlue, width: 1.5),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: TextFormField(
-                        controller: controller.weightController,
-                        style: const TextStyle(color: Colors.white),
-                        // onChanged: (value) => controller.weight.value =
-                        //     double.tryParse(value) ?? 0.0,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Weight (kg)',
-                          prefixIcon:
-                              Icon(Icons.fitness_center, color: Colors.white),
-                          labelStyle: TextStyle(color: Colors.white),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
+                    child: textfieldWidget(
+                        controller.weightController,
+                        "Weight (kg)",
+                        Icons.fitness_center,
+                        TextInputType.number),
                   ),
                 ],
               ),
@@ -216,33 +144,74 @@ class GetStarted extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Get Started Button
-              Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.lightBlue,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 36, vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  onPressed: () {
-                    controller.saveUserData();
-                    Get.off(const HomePage(), binding: HomeBinder());
-                  },
-                  child: const Text(
-                    'Get Started',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
+        floatingActionButton: Container(
+          width: double.infinity,
+          height: 85,
+          padding: const EdgeInsets.all(15),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.lightBlue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              controller.saveUserData();
+              // Get.off(
+              //   const HomePage(),
+              //   binding: HomeBinder(),
+              //   transition: Transition.leftToRightWithFade,
+              // );
+            },
+            child: const Text(
+              'Get Started',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );
     });
+  }
+
+  Widget textfieldWidget(TextEditingController controller, String label,
+      IconData icon, TextInputType type,
+      {VoidCallback? action, bool isReadOnly = false}) {
+    return TextFormField(
+      controller: controller,
+      style: const TextStyle(color: Colors.white),
+      readOnly: isReadOnly,
+      onTap: action,
+      keyboardType: type,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon, color: Colors.white),
+        labelStyle: const TextStyle(color: Colors.white),
+        border: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+          borderSide: BorderSide(
+            color: AppColors.lightBlue,
+            width: 2,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+          borderSide: BorderSide(
+            color: AppColors.lightBlue,
+            width: 2,
+          ),
+        ),
+      ),
+    );
   }
 }

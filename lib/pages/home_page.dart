@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
             activeColor: Colors.amber,
             inactiveColor: Colors.white54,
             backgroundColor: const Color(0xff232327),
-            gapLocation: GapLocation.center,
+            gapLocation: GapLocation.none,
             notchSmoothness: NotchSmoothness.softEdge,
             notchMargin: 12,
             leftCornerRadius: 25,

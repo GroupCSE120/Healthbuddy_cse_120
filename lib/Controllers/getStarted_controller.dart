@@ -5,6 +5,7 @@ import '../Modals/user_modal.dart';
 
 class GetStartedController extends GetxController {
   TextEditingController nameController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
 
@@ -17,8 +18,12 @@ class GetStartedController extends GetxController {
   };
 
   void saveUserData() async {
-    var userBox = await Hive.openBox<UserModal>('userBox');
-    await userBox.put(
+    try {
+      // Check if the box is already open
+      var userBox = await Hive.openBox<UserModal>('userBox');
+
+      // Save user data
+      await userBox.put(
         "userData",
         UserModal(
           name: nameController.text,
@@ -27,7 +32,13 @@ class GetStartedController extends GetxController {
           height: double.parse(heightController.text),
           weight: double.parse(weightController.text),
           healthMap: healthMap,
-        ));
-    print("User data saved: ${nameController.text}");
+        ),
+      );
+
+      print("User data saved: ${nameController.text}");
+    } catch (e) {
+      print("Error saving user data: $e");
+    }
   }
+
 }
