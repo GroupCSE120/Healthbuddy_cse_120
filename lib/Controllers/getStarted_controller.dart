@@ -1,31 +1,44 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import '../Modals/User_modal.dart';
+import 'package:hive/hive.dart';
+import '../Modals/user_modal.dart';
 
 class GetStartedController extends GetxController {
-  final name = ''.obs;
-  final dob = DateTime.now().obs;
-  final sex = ''.obs;
-  final height = 0.0.obs;
-  final weight = 0.0.obs;
-  final healthMap = <String, bool>{}.obs;
-  final declarationAccepted = false.obs; // Declaration acceptance state
+  TextEditingController nameController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
+  TextEditingController heightController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
 
-  void saveUserData() {
-    if (!declarationAccepted.value) {
-      print("Declaration not accepted. Cannot save user data.");
-      return;
+  DateTime? dob;
+  String sex = "";
+  Map<String, bool> healthMap = {
+    'Diabetes': false,
+    'BP': false,
+    'Disability': false,
+  };
+
+  void saveUserData() async {
+    try {
+      // Check if the box is already open
+      var userBox = await Hive.openBox<UserModal>('userBox');
+
+      // Save user data
+      await userBox.put(
+        "userData",
+        UserModal(
+          name: nameController.text,
+          dob: dob ?? DateTime.now(),
+          sex: sex,
+          height: double.parse(heightController.text),
+          weight: double.parse(weightController.text),
+          healthMap: healthMap,
+        ),
+      );
+
+      print("User data saved: ${nameController.text}");
+    } catch (e) {
+      print("Error saving user data: $e");
     }
-
-    // Saving user data
-    final user = UserModal(
-      name: name.value,
-      dob: dob.value,
-      sex: sex.value,
-      height: height.value,
-      weight: weight.value,
-      healthMap: healthMap,
-    );
-
-    print("User data saved: $user");
   }
+
 }

@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_buddy/Pages/splash_screen.dart';
+import 'package:health_buddy/modals/user_modal.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Hive.initFlutter();
+    Hive.registerAdapter(UserModalAdapter());
+    debugPrint('Initializing the app: ${Hive.isAdapterRegistered(0)}');
+    runApp(const MyApp());
+  } catch (e) {
+    debugPrint('Error initializing the app: $e');
+  }
+  //
+  // runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
