@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_buddy/binders/home_binder.dart';
 import 'package:health_buddy/constants/app_color.dart';
+import 'package:health_buddy/pages/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Binders/getStarted_binder.dart';
 import 'get_started.dart';
 
@@ -16,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
+  bool isFirstTime = false;
 
   @override
   void initState() {
@@ -40,10 +44,28 @@ class _SplashScreenState extends State<SplashScreen>
     // Start animation
     _controller.forward();
 
+    checkTheNewUser();
+
     // Navigate after delay
     Future.delayed(const Duration(seconds: 5), () {
-      Get.off(const GetStarted(), binding: GetStartedBinder());
+      if (!isFirstTime) {
+        Get.off(const GetStarted(), binding: GetStartedBinder());
+      } else {
+        Get.off(const HomePage(), binding: HomeBinder());
+      }
     });
+  }
+
+  Future<void> checkTheNewUser() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    if (sharedPreferences.getString('username') != null) {
+      print("true");
+      isFirstTime = true;
+    } else {
+      print("false");
+      isFirstTime = false;
+    }
   }
 
   @override

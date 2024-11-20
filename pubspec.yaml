@@ -65,6 +65,7 @@ flutter:
     - assets/images/logo.jpg
     - assets/images/home_lottie.json
     - assets/csv/food_list_csv.csv
+    - assets/images/greeting_img1.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
