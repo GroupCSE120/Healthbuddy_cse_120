@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:health_buddy/sub_pages/another.dart';
 import 'package:health_buddy/sub_pages/diet.dart';
 import 'package:health_buddy/sub_pages/home.dart';
+import 'package:health_buddy/sub_pages/profile.dart';
 
 import '../Controllers/home_controller.dart';
 
@@ -25,6 +26,8 @@ class HomePage extends StatelessWidget {
                 return const Diet();
               } else if (index == 2) {
                 return const Another();
+              } else if (index == 3){
+                return const Profile();
               }
               return const Center(child: Text("Error 404: Page Not Found"));
             },

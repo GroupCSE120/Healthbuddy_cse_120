@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/home_controller.dart';
+import '../Controllers/home_controller.dart';
 
 class Diet extends StatelessWidget {
   const Diet({super.key});
