@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import '../Modals/user_modal.dart';
+import 'package:health_buddy/extension/method_extensions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GetStartedController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -11,34 +11,50 @@ class GetStartedController extends GetxController {
 
   DateTime? dob;
   String sex = "";
-  Map<String, bool> healthMap = {
-    'Diabetes': false,
-    'BP': false,
-    'Disability': false,
-  };
+  bool isDiabetes = false;
+  bool isBP = false;
+  bool isDisabilities = false;
 
   void saveUserData() async {
-    try {
-      // Check if the box is already open
-      var userBox = await Hive.openBox<UserModal>('userBox');
+    if (nameController.text.isNotEmpty &&
+        dob != null &&
+        sex.isNotEmpty &&
+        heightController.text.isNotEmpty &&
+        weightController.text.isNotEmpty) {
+      try {
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setString('username', nameController.text);
+        sharedPreferences.setString('dob', dob!.toFormattedString());
+        sharedPreferences.setString('sex', sex);
+        sharedPreferences.setDouble(
+            'height', double.parse(heightController.text.toString().trim()));
+        sharedPreferences.setDouble(
+            'weight', double.parse(weightController.text.toString().trim()));
+        sharedPreferences.setBool('isDiabetes', isDiabetes);
+        sharedPreferences.setBool('isBP', isBP);
+        sharedPreferences.setBool('isDisability', isDisabilities);
 
-      // Save user data
-      await userBox.put(
-        "userData",
-        UserModal(
-          name: nameController.text,
-          dob: dob ?? DateTime.now(),
-          sex: sex,
-          height: double.parse(heightController.text),
-          weight: double.parse(weightController.text),
-          healthMap: healthMap,
+        print("User data saved: ${nameController.text}");
+      } catch (e) {
+        print("Error saving user data: $e");
+      }
+    } else {
+      Get.showSnackbar(const GetSnackBar(
+        title: 'Warning!!',
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.all(10),
+        icon: Icon(
+          Icons.warning_rounded,
+          color: Colors.white,
+          size: 30,
         ),
-      );
-
-      print("User data saved: ${nameController.text}");
-    } catch (e) {
-      print("Error saving user data: $e");
+        borderRadius: 20,
+        message: 'Please fill all of the above information.',
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.redAccent,
+        dismissDirection: DismissDirection.horizontal,
+      ));
     }
   }
-
 }

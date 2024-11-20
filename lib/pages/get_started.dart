@@ -121,25 +121,47 @@ class GetStarted extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Column(
-                children: ['Diabetes', 'BP', 'Disability']
-                    .map(
-                      (condition) => CheckboxListTile(
-                        title: Text(
-                          condition,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        value: controller.healthMap[condition] ?? false,
-                        onChanged: (value) {
-                          controller.healthMap[condition] = value ?? false;
-                          controller.update();
-                        },
-                        activeColor: AppColors.green,
-                        checkColor: Colors.black,
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
-                    )
-                    .toList(),
+              CheckboxListTile(
+                title: const Text(
+                  "Diabetes",
+                  style: TextStyle(color: Colors.white),
+                ),
+                value: controller.isDiabetes,
+                onChanged: (value) {
+                  controller.isDiabetes = value ?? false;
+                  controller.update();
+                },
+                activeColor: AppColors.green,
+                checkColor: Colors.black,
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
+              CheckboxListTile(
+                title: const Text(
+                  "BP",
+                  style: TextStyle(color: Colors.white),
+                ),
+                value: controller.isBP,
+                onChanged: (value) {
+                  controller.isBP = value ?? false;
+                  controller.update();
+                },
+                activeColor: AppColors.green,
+                checkColor: Colors.black,
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
+              CheckboxListTile(
+                title: const Text(
+                  "Disability",
+                  style: TextStyle(color: Colors.white),
+                ),
+                value: controller.isDisabilities,
+                onChanged: (value) {
+                  controller.isDisabilities = value ?? false;
+                  controller.update();
+                },
+                activeColor: AppColors.green,
+                checkColor: Colors.black,
+                controlAffinity: ListTileControlAffinity.leading,
               ),
               const SizedBox(height: 24),
 
@@ -160,11 +182,11 @@ class GetStarted extends StatelessWidget {
             ),
             onPressed: () {
               controller.saveUserData();
-              // Get.off(
-              //   const HomePage(),
-              //   binding: HomeBinder(),
-              //   transition: Transition.leftToRightWithFade,
-              // );
+              Get.off(
+                const HomePage(),
+                binding: HomeBinder(),
+                transition: Transition.leftToRightWithFade,
+              );
             },
             child: const Text(
               'Get Started',

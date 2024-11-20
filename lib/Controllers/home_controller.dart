@@ -1,9 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_buddy/Modals/food_modal.dart';
+import 'package:health_buddy/extension/method_extensions.dart';
 import 'package:health_buddy/repository/load_data.dart';
 import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Modals/user_modal.dart';
 
@@ -21,13 +22,15 @@ class HomeController extends GetxController {
   final LoadData _loadData = LoadData();
 
   @override
-  void onReady() {             // All data fetching function runs heres at the start when controller is initialized.
+  void onReady() {
+    // All data fetching function runs heres at the start when controller is initialized.
     getUserData();
     getFoodItemList();
     super.onReady();
   }
 
-  void changePage(int index) {          // this is for changing the page don use this i have already settle this.
+  void changePage(int index) {
+    // this is for changing the page don use this i have already settle this.
     currentPageIndex = index;
     pageController.animateToPage(
       currentPageIndex,
@@ -37,32 +40,49 @@ class HomeController extends GetxController {
     update();
   }
 
-  void changeTheme(bool value) {         // From this we can change the theme its optional
+  void changeTheme(bool value) {
+    // From this we can change the theme its optional
     isDarkMode = !isDarkMode;
     Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
     update();
   }
 
-  void getUserData() async {                          // From this we get the user data from local storage
-    var userBox = await Hive.openBox<UserModal>('userBox');
-    user = userBox.get('userData') ??
-        UserModal(
-          name: "404",
-          dob: DateTime.now(),
-          sex: "404",
-          height: 404,
-          weight: 404,
-          healthMap: {},
-        );
+  void getUserData() async {
+    // From this we get the user data from local storage
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    String name = sharedPreferences.getString('username') ?? "";
+    String dob = sharedPreferences.getString('dob') ?? "";
+    String sex = sharedPreferences.getString('sex') ?? "";
+    double height = sharedPreferences.getDouble('height') ?? 0.0;
+    double weight = sharedPreferences.getDouble('weight') ?? 0.0;
+    bool isDiabetes = sharedPreferences.getBool('isDiabetes') ?? false;
+    bool isBP = sharedPreferences.getBool('isBP') ?? false;
+    bool isDisability = sharedPreferences.getBool('isDisability') ?? false;
+
+    user = UserModal(
+      name: name,
+      dob: dob.toDateTime() ?? DateTime.now(),
+      sex: sex,
+      height: height,
+      weight: weight,
+      isDiabetes: isDiabetes,
+      isBP: isBP,
+      isDisability: isDisability,
+    );
     update();
   }
 
-  void getFoodItemList() async {                // From this we get the data I have them in
-    foodList = await _loadData.getCsvData();    // onReady state u can directly access the foodList
+  void getFoodItemList() async {
+    // From this we get the data I have them in
+    foodList = await _loadData
+        .getCsvData(); // onReady state u can directly access the foodList
     update();
   }
 
-  void addItemsToMealList(List<FoodModal> food, int mealCount) {      // Use this to add items to list
+  void addItemsToMealList(List<FoodModal> food, int mealCount) {
+    // Use this to add items to list
     if (mealCount == 0) {
       for (var element in breakfastItems) {
         food.add(element);
@@ -79,7 +99,8 @@ class HomeController extends GetxController {
     update();
   }
 
-  double get breakfastCalories {          // Use this to get total breakfast calories
+  double get breakfastCalories {
+    // Use this to get total breakfast calories
     double count = 0;
     for (var element in breakfastItems) {
       count += element.calories;
@@ -87,7 +108,8 @@ class HomeController extends GetxController {
     return count;
   }
 
-  double get lunchCalories {          // Use this to get total lunch calories
+  double get lunchCalories {
+    // Use this to get total lunch calories
     double count = 0;
     for (var element in lunchItems) {
       count += element.calories;
@@ -95,11 +117,22 @@ class HomeController extends GetxController {
     return count;
   }
 
-  double get dinnerCalories {          // Use this to get total dinner calories
+  double get dinnerCalories {
+    // Use this to get total dinner calories
     double count = 0;
     for (var element in dinnerItems) {
       count += element.calories;
     }
     return count;
   }
+
+  double get bmi {
+    double heightInM = user.height / 100;
+    double heightSquare = heightInM * heightInM;
+
+    double bmi = user.weight / heightSquare;
+    return bmi;
+  }
+
+  // weight / (height/ 100)^2
 }

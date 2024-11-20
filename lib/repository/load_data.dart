@@ -5,8 +5,10 @@ import 'package:health_buddy/Modals/food_modal.dart';
 class LoadData {
   Future<List<FoodModal>> getCsvData() async {
     try {
-      final rawData = await rootBundle.loadString("assets/CSV/prd4.csv");
+      final rawData =
+          await rootBundle.loadString("assets/csv/food_list_csv.csv");
       List<List<dynamic>> data = const CsvToListConverter().convert(rawData);
+      print(data);
       return _mapDataFromCsv(data); // Map and returns data after loading CSV
     } catch (e) {
       print("Error loading CSV: $e");
@@ -22,21 +24,22 @@ class LoadData {
       try {
         foodList.add(FoodModal(
           foodName: row[0],
-          glycemicIndex: row[1].toDouble(),
-          calories: row[2].toDouble(),
-          carbohydrates: row[3].toDouble(),
-          protiens: row[4].toDouble(),
-          fats: row[5].toDouble(),
-          sodium: row[8].toDouble(),
-          pottasium: row[9].toDouble(),
-          magnesium: row[10].toDouble(),
-          calcium: row[11].toDouble(),
-          fiber: row[12].toDouble(),
-          sugar: row[6] == 1,
-          bp: row[7] == 1,
+          glycemicIndex: double.parse(row[1].toString()),
+          calories: double.parse(row[2].toString()),
+          carbohydrates: double.parse(row[3].toString()),
+          protiens: double.parse(row[4].toString()),
+          fats: double.parse(row[5].toString()),
+          sodium: double.parse(row[8].toString()),
+          pottasium: double.parse(row[9].toString()),
+          magnesium: double.parse(row[10].toString()),
+          calcium: double.parse(row[11].toString()),
+          fiber: double.parse(row[12].toString()),
+          sugar: row[6].toString() == "1",
+          bp: row[7].toString() == "1",
         ));
       } catch (e) {
         print("Error parsing row $i: $e");
+        print("$row");
       }
     }
 
