@@ -7,6 +7,7 @@ import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Modals/user_modal.dart';
+import '../constants/app_color.dart';
 
 class HomeController extends GetxController {
   int currentPageIndex = 0;
@@ -99,6 +100,57 @@ class HomeController extends GetxController {
     update();
   }
 
+  void selectFood() {
+    Get.bottomSheet(
+      // isScrollControlled: true,
+
+      Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
+              color: AppColors.cardColor),
+          padding: const EdgeInsets.all(20),
+          child: ListView(
+            children: [
+              const Text(
+                "+ Add Food",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                ),
+              ),
+              ...List.generate(
+                foodList.length,
+                (index) {
+                  return Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade800.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    margin: const EdgeInsets.all(5),
+                    child: Row(
+                      children: [
+                        Text(
+                          foodList[index].foodName,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              )
+            ],
+          )),
+    );
+  }
+
   double get breakfastCalories {
     // Use this to get total breakfast calories
     double count = 0;
@@ -134,5 +186,5 @@ class HomeController extends GetxController {
     return bmi;
   }
 
-  // weight / (height/ 100)^2
+// weight / (height/ 100)^2
 }
