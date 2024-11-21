@@ -198,5 +198,17 @@ class HomeController extends GetxController {
     return bmi;
   }
 
+  String get status{
+    if( bmi < 18.5){
+      return " Underweight";
+    }else if(bmi > 18.5 && bmi < 24.9){
+      return "Health Weight";
+    }else if (bmi > 25 && bmi < 29.9){
+      return "Overweight";
+    }else{
+      return "Obesity";
+    }
+  }
+
 // weight / (height/ 100)^2
 }
