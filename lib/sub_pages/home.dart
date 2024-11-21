@@ -207,8 +207,12 @@ class Home extends StatelessWidget {
                                       onPressed: () {
                                         controller.bmiBottomSheet();
                                       },
+
                                       icon: const Icon(Icons.help,
                                           color: Colors.white),
+
+                                      icon: Icon(Icons.help, color: Colors.lightBlueAccent.shade100.withAlpha(500)),
+
                                     ),
                                   ],
                                 ),
@@ -216,10 +220,10 @@ class Home extends StatelessWidget {
                                   height: 15,
                                 ),
                                 Text(
-                                  "Note: BMI is in normal range, maintain it",
+                                  "Status: ${controller.status}",
                                   style: TextStyle(
                                     color: AppColors.lightGreen,
-                                    fontSize: 12,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.normal,
                                   ),
                                 ),

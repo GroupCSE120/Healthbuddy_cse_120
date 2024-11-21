@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_buddy/Controllers/home_controller.dart';
 import 'package:health_buddy/constants/app_color.dart';
+import 'package:health_buddy/pages/home_page.dart';
 
 class EditProfile extends StatelessWidget {
   const EditProfile({super.key});
@@ -93,6 +94,7 @@ class EditProfile extends StatelessWidget {
                     controller.update();
                   },
                 ),
+                const SizedBox(height: 10),
                 _buildSwitchTile(
                   title: "Blood Pressure",
                   value: controller.user.isBP,
@@ -101,6 +103,7 @@ class EditProfile extends StatelessWidget {
                     controller.update();
                   },
                 ),
+                const SizedBox(height: 10),
                 _buildSwitchTile(
                   title: "Disability",
                   value: controller.user.isDisability,
@@ -121,6 +124,7 @@ class EditProfile extends StatelessWidget {
                           double.tryParse(weightController.text) ?? 0.0;
 
 
+
                       Get.snackbar(
                         'Profile Updated',
                         'Your changes have been saved successfully!',
@@ -128,6 +132,11 @@ class EditProfile extends StatelessWidget {
                         backgroundColor: AppColors.green,
                         colorText: Colors.white,
                       );
+                      print("object");
+                      controller.update();
+                      print("controller updated");
+
+                      Get.off(()=>{const HomePage(),});
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.lightBlue,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_buddy/Binders/goal_binder.dart';
 import 'package:health_buddy/Controllers/home_controller.dart';
 import 'package:health_buddy/constants/app_color.dart';
+import 'package:health_buddy/sub_pages/profilehelper/goals.dart';
 
 import 'profilehelper/edit_profile.dart';
 
@@ -65,7 +67,7 @@ class Profile extends StatelessWidget {
                     width: 200,
                     child: ElevatedButton(
                         onPressed: () => {
-                          Get.to(()=> const EditProfile())
+                          Get.to(()=> EditProfile())
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.lightBlue,
@@ -84,71 +86,78 @@ class Profile extends StatelessWidget {
                   SizedBox(height: 30,),
                   const Divider(),
                   SizedBox(height: 10,),
-                  InkWell(
-                    onTap: (){
-
+                  ElevatedButton(
+                    onPressed: () {
+                      // Action for "Set Goals"
+                      Get.to(const Goals(),binding: GoalBinder(),transition: Transition.leftToRight);
                     },
-                    child: Card(
-                      color: AppColors.cardColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.gavel_outlined, color: Colors.white,),
-                            SizedBox(width: 30,),
-                            Text('Set Goals', style: TextStyle(fontSize: 24, color: Colors.white),),
-                            SizedBox(width: 30,),
-                            IconButton(onPressed: (){}, icon: Icon(Icons.chevron_right, color: Colors.white,)),
-                          ],
-
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.cardColor,
+                      padding: const EdgeInsets.all(12.0),
+                      alignment: Alignment.centerLeft,
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.gavel_outlined, color: Colors.white),
+                        SizedBox(width: 30),
+                        Expanded(
+                          child: Text(
+                            'Set Goals',
+                            style: TextStyle(fontSize: 24, color: Colors.white),
+                          ),
                         ),
-                      ),
+                        Icon(Icons.chevron_right, color: Colors.white),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 10,),
-                  InkWell(
-                    onTap: (){
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
 
                     },
-                    child: Card(
-                      color: AppColors.cardColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.list_alt_outlined, color: Colors.white,),
-                            SizedBox(width: 30,),
-                            Text('Create Food Lists', style: TextStyle(fontSize: 24, color: Colors.white),),
-                            SizedBox(width: 30,),
-                            IconButton(onPressed: (){}, icon: Icon(Icons.chevron_right, color: Colors.white,)),
-                          ],
-
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.cardColor,
+                      padding: const EdgeInsets.all(12.0),
+                      alignment: Alignment.centerLeft,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.list_alt_outlined, color: Colors.white),
+                        SizedBox(width: 30),
+                        Expanded(
+                          child: Text(
+                            'Create Food Lists',
+                            style: TextStyle(fontSize: 24, color: Colors.white),
+                          ),
                         ),
-                      ),
+                        Icon(Icons.chevron_right, color: Colors.white),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 10,),
-                  InkWell(
-                    onTap: (){
-
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Action for "Personal Notes"
                     },
-                    child: Card(
-                      color: AppColors.cardColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.note_alt_sharp, color: Colors.white,),
-                            SizedBox(width: 30,),
-                            Text('Personal Notes', style: TextStyle(fontSize: 24, color: Colors.white),),
-                            SizedBox(width: 30,),
-                            IconButton(onPressed: (){}, icon: Icon(Icons.chevron_right, color: Colors.white,)),
-                          ],
-
-                        ),
-                      ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.cardColor,
+                      padding: const EdgeInsets.all(12.0),
+                      alignment: Alignment.centerLeft,
                     ),
-                  )
+                    child: Row(
+                      children: [
+                        Icon(Icons.note_alt_sharp, color: Colors.white),
+                        SizedBox(width: 30),
+                        Expanded(
+                          child: Text(
+                            'Personal Notes',
+                            style: TextStyle(fontSize: 24, color: Colors.white),
+                          ),
+                        ),
+                        Icon(Icons.chevron_right, color: Colors.white),
+                      ],
+                    ),
+                  ),
 
 
 
