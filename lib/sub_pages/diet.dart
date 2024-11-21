@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_buddy/Modals/food_modal.dart';
 import 'package:health_buddy/constants/app_color.dart';
 
 import '../Controllers/home_controller.dart';
@@ -28,7 +29,8 @@ class Diet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, bottom: 15),
                       child: DropdownButton(
                         items: const [
                           DropdownMenuItem(
@@ -57,13 +59,13 @@ class Diet extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              '0',
-                              style: TextStyle(
+                              controller.dailyGoal.toString(),
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                               ),
                             ),
-                            Text(
+                            const Text(
                               'Goal',
                               style: TextStyle(color: Colors.white70),
                             )
@@ -76,26 +78,26 @@ class Diet extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              '0',
-                              style: TextStyle(
+                              controller.foodCalories.toString(),
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                               ),
                             ),
-                            Text(
+                            const Text(
                               'Food',
                               style: TextStyle(color: Colors.white70),
                             )
                           ],
                         ),
-                        Text(
+                        const Text(
                           '+',
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 20,
                           ),
                         ),
-                        Column(
+                        const Column(
                           children: [
                             Text(
                               '0',
@@ -110,7 +112,7 @@ class Diet extends StatelessWidget {
                             )
                           ],
                         ),
-                        Text(
+                        const Text(
                           '=',
                           style: TextStyle(
                             color: Colors.white70,
@@ -120,13 +122,13 @@ class Diet extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              '9999',
+                              '${controller.dailyGoal - controller.foodCalories}',
                               style: TextStyle(
                                 color: AppColors.lightBlue,
                                 fontSize: 20,
                               ),
                             ),
-                            Text(
+                            const Text(
                               'Remaining',
                               style: TextStyle(color: Colors.white70),
                             )
@@ -140,9 +142,15 @@ class Diet extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              selectFood("Breakfast", () {controller.selectFood();}),
-              selectFood("Lunch", () {controller.selectFood();}),
-              selectFood("Dinner", () {controller.selectFood();}),
+              selectFood("Breakfast", () {
+                controller.selectFood(0);
+              }, controller.breakfastItems),
+              selectFood("Lunch", () {
+                controller.selectFood(1);
+              }, controller.lunchItems),
+              selectFood("Dinner", () {
+                controller.selectFood(2);
+              }, controller.dinnerItems),
             ],
           ),
         );
@@ -150,7 +158,15 @@ class Diet extends StatelessWidget {
     );
   }
 
-  Widget selectFood(String foodItem, VoidCallback addFood) {
+  Widget selectFood(
+      String foodItem, VoidCallback addFood, List<FoodModal> list) {
+    final Map<String, int> itemCount = {};
+    for (var item in list) {
+      itemCount[item.foodName] = (itemCount[item.foodName] ?? 0) + 1;
+    }
+
+    final List<FoodModal> uniqueItems = list.toSet().toList();
+
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -160,13 +176,133 @@ class Diet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 10, bottom: 15),
+            padding: const EdgeInsets.only(left: 10, bottom: 5),
             child: Text(
               foodItem,
               style: const TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),
           const Divider(),
+          ...List.generate(uniqueItems.length, (index) {
+            return Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade800.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      color: Colors.white,
+                      child: Image.asset("assets/images/logo.jpg"),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            uniqueItems[index].foodName,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            "Calories: ${uniqueItems[index].calories}",
+                            style: const TextStyle(
+                              color: Colors.white54,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 10,
+                            ),
+                          ),
+                          Text(
+                            "Proteins: ${uniqueItems[index].protiens}",
+                            style: const TextStyle(
+                              color: Colors.white54,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 10,
+                            ),
+                          ),
+                          Text(
+                            "Fats: ${uniqueItems[index].fats}",
+                            style: const TextStyle(
+                              color: Colors.white54,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child:
+                    Container(
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: Colors.limeAccent.shade200,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    int count = 0;
+                                    if (foodItem == "Breakfast") {
+                                      count = 0;
+                                    } else if (foodItem == "Lunch") {
+                                      count = 1;
+                                    } else if (foodItem == "Dinner") {
+                                      count = 2;
+                                    }
+                                    Get.find<HomeController>().removeItemsToMealList(uniqueItems[index], count);
+                                  },
+                                  child: const Icon(
+                                    Icons.remove,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  "${itemCount[uniqueItems[index].foodName]}",
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    int count = 0;
+                                    if (foodItem == "Breakfast") {
+                                      count = 0;
+                                    } else if (foodItem == "Lunch") {
+                                      count = 1;
+                                    } else if (foodItem == "Dinner") {
+                                      count = 2;
+                                    }
+                                    Get.find<HomeController>().addItemsToMealList(uniqueItems[index], count);
+                                  },
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ))
+                  ),
+                ],
+              ),
+            );
+          }),
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(

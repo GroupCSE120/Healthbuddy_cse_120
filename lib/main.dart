@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_buddy/Pages/splash_screen.dart';
+import 'package:health_buddy/modals/food_modal.dart';
+import 'package:health_buddy/modals/list_of_food.dart';
 import 'package:health_buddy/modals/user_modal.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // try {
-  //   await Hive.initFlutter();
-  //   Hive.registerAdapter(UserModalAdapter());
-  //   debugPrint('Initializing the app: ${Hive.isAdapterRegistered(0)}');
-  //
-  // } catch (e) {
-  //   debugPrint('Error initializing the app: $e');
-  // }
-  //
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(FoodModalAdapter());
+  await Hive.openBox<List<FoodModal>>("foodModal");
+
+  Hive.registerAdapter(ListOfFoodAdapter());
+  await Hive.openBox<ListOfFood>("listOfFood");
+
   runApp(const MyApp());
 }
 

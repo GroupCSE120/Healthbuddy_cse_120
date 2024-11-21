@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
         return Scaffold(
           body: PageView.builder(
             controller: controller.pageController,
-            itemCount: 4,
+            itemCount: 3,
             itemBuilder: (context, index) {
               if (index == 0) {
                 return const Home();
@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
           bottomNavigationBar: AnimatedBottomNavigationBar(
             icons: const [
               Icons.home_filled,
-              Icons.favorite_border_rounded,
+              Icons.food_bank,
               Icons.person_rounded,
             ],
             activeIndex: controller.currentPageIndex,
