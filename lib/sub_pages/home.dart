@@ -73,165 +73,164 @@ class Home extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey.shade800,
-                              width: 2,
-                            ),
+                        Card(
+                          margin: const EdgeInsets.all(20),
+                          elevation: 20,
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          margin: const EdgeInsets.all(20),
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                "BMI Status",
-                                style: TextStyle(
-                                  color: AppColors.lightBlue,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
+                          color: Colors.grey.shade900,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "BMI Status",
+                                  style: TextStyle(
+                                    color: AppColors.lightBlue,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 145,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(20),
-                                            color: Colors.grey.shade800
-                                                .withOpacity(0.5)),
-                                        padding: const EdgeInsets.all(12),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          children: [
-                                            const Icon(
-                                              Icons.height,
-                                              color: Colors.white,
-                                              size: 35,
-                                            ),
-                                            Text(
-                                              '${controller.user.height}',
-                                              style: const TextStyle(
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 145,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: Colors.grey.shade800
+                                                  .withOpacity(0.5)),
+                                          padding: const EdgeInsets.all(12),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                Icons.height,
                                                 color: Colors.white,
-                                                fontSize: 30,
+                                                size: 35,
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Text(
-                                        'Height (cm)',
-                                        style: TextStyle(
-                                          color: Colors.white70,
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 145,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(20),
-                                            color: Colors.grey.shade800
-                                                .withOpacity(0.5)),
-                                        padding: const EdgeInsets.all(12),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          children: [
-                                            const Icon(
-                                              Icons.fitness_center,
-                                              color: Colors.white,
-                                              size: 35,
-                                            ),
-                                            Text(
-                                              '${controller.user.weight}',
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 30,
+                                              Text(
+                                                '${controller.user.height}',
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 30,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      const Text(
-                                        'Weight (kg)',
-                                        style: TextStyle(
-                                          color: Colors.white70,
-                                          fontSize: 13,
+                                        const Text(
+                                          'Height (cm)',
+                                          style: TextStyle(
+                                            color: Colors.white70,
+                                            fontSize: 13,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "BMI : ${controller.bmi}",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
+                                      ],
                                     ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      controller.bmiBottomSheet();
-                                    },
-                                    icon: Icon(Icons.help,
-                                        color: Colors.lightBlueAccent.shade100
-                                            .withAlpha(500)),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                "Status: ${controller.status}",
-                                style: TextStyle(
-                                  color: AppColors.lightGreen,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.normal,
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 145,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: Colors.grey.shade800
+                                                  .withOpacity(0.5)),
+                                          padding: const EdgeInsets.all(12),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                Icons.fitness_center,
+                                                color: Colors.white,
+                                                size: 35,
+                                              ),
+                                              Text(
+                                                '${controller.user.weight}',
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 30,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const Text(
+                                          'Weight (kg)',
+                                          style: TextStyle(
+                                            color: Colors.white70,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "BMI : ${controller.bmi}",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        controller.bmiBottomSheet();
+                                      },
+                                      icon: Icon(Icons.help,
+                                          color: Colors.lightBlueAccent.shade100
+                                              .withAlpha(500)),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "Status: ${controller.status}",
+                                  style: TextStyle(
+                                    color: AppColors.lightGreen,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),
                 ),
+
               ],
             ),
           );
         } else {
-          return const Center(child: CircularProgressIndicator(),);
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );
