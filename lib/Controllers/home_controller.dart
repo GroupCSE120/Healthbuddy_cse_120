@@ -3,12 +3,10 @@ import 'package:get/get.dart';
 import 'package:health_buddy/Modals/food_modal.dart';
 import 'package:health_buddy/extension/method_extensions.dart';
 import 'package:health_buddy/repository/load_data.dart';
-import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Modals/user_modal.dart';
 import '../constants/app_color.dart';
-import '../modals/list_of_food.dart';
 
 class HomeController extends GetxController {
   int currentPageIndex = 0;
@@ -18,6 +16,7 @@ class HomeController extends GetxController {
   String selectedGoal = "Calories";
   late UserModal user;
   late List<FoodModal> foodList;
+  bool isLoading = true;
 
   List<FoodModal> breakfastItems = [];
   List<FoodModal> dinnerItems = [];
@@ -31,11 +30,11 @@ class HomeController extends GetxController {
   final LoadData _loadData = LoadData();
 
   @override
-  void onReady() {
+  void onInit() {
     // All data fetching function runs here's at the start when controller is initialized.
-    getUserData();
     getFoodItemList();
-    super.onReady();
+    // getUserData();
+    super.onInit();
   }
 
   void changePage(int index) {
@@ -80,31 +79,101 @@ class HomeController extends GetxController {
       isBP: isBP,
       isDisability: isDisability,
     );
-    update();
 
-    try {
-      var box = await Hive.openBox<ListOfFood>("listOfFood");
-      var variable = box.get('list');
-      print(variable);
-    } catch (e) {
-      print(e);
-    }
+    getBreakfastFoodData(DateTime.now());
+    getDinnerFoodData(DateTime.now());
+    getLunchFoodData(DateTime.now());
+
+    update();
   }
 
   void getFoodItemList() async {
-    // From this we get the data I have them in
-    foodList = await _loadData
-        .getCsvData(); // onReady state u can directly access the foodList
+    foodList = await _loadData.getCsvData();
+
+    getUserData();
+    isLoading = false;
     update();
+  }
+
+  void getBreakfastFoodData(DateTime dateTime) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    List<String> list = sharedPreferences
+            .getStringList("breakfast(${dateTime.toFormattedString()})") ??
+        [];
+    breakfastItems = _loadData.returnListFromIds(list);
+    print("$list =============================> $breakfastItems");
+    update();
+  }
+
+  void getLunchFoodData(DateTime dateTime) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    List<String> list = sharedPreferences
+            .getStringList("lunch(${dateTime.toFormattedString()})") ??
+        [];
+    lunchItems = _loadData.returnListFromIds(list);
+    print("$list =============================> $lunchItems");
+    update();
+  }
+
+  void getDinnerFoodData(DateTime dateTime) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    List<String> list = sharedPreferences
+            .getStringList("dinner(${dateTime.toFormattedString()})") ??
+        [];
+    dinnerItems = _loadData.returnListFromIds(list);
+    print("$list =============================> $dinnerItems");
+    update();
+  }
+
+  void setListData(List<FoodModal> list, String key) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    List<String> idList = [];
+    list.forEach(
+      (element) => idList.add(element.id.toString()),
+    );
+    print("foodList ====================> $list");
+    print("list ====================> $idList");
+    await sharedPreferences.setStringList(key, idList);
   }
 
   void addItemsToMealList(FoodModal food, int mealCount) async {
     getMealList(mealCount).add(food);
+
+    String key = "";
+    switch (mealCount) {
+      case 0:
+        key = "breakfast(${DateTime.now().toFormattedString()})";
+        break;
+      case 1:
+        key = "lunch(${DateTime.now().toFormattedString()})";
+        break;
+      case 2:
+        key = "dinner(${DateTime.now().toFormattedString()})";
+        break;
+    }
+    print("key ====================> $key");
+    setListData(getMealList(mealCount), key);
     update();
   }
 
   void removeItemsToMealList(FoodModal food, int mealCount) async {
     getMealList(mealCount).remove(food);
+
+    String key = "";
+    switch (mealCount) {
+      case 0:
+        key = "breakfast(${DateTime.now().toFormattedString()})";
+        break;
+      case 1:
+        key = "lunch(${DateTime.now().toFormattedString()})";
+        break;
+      case 2:
+        key = "dinner(${DateTime.now().toFormattedString()})";
+        break;
+    }
+
+    setListData(getMealList(mealCount), key);
     update();
   }
 
@@ -119,7 +188,7 @@ class HomeController extends GetxController {
     return [];
   }
 
-  void updateSelectedGoal(String value){
+  void updateSelectedGoal(String value) {
     selectedGoal = value;
     update();
   }
@@ -252,7 +321,7 @@ class HomeController extends GetxController {
                 ),
                 ...List.generate(
                   tempList.length,
-                      (index) {
+                  (index) {
                     return Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
@@ -320,74 +389,75 @@ class HomeController extends GetxController {
                                 color: Colors.limeAccent.shade200,
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              child: itemCount[tempList[index].foodName] != null &&
-                                  itemCount[tempList[index].foodName]! > 0
+                              child: itemCount[tempList[index].foodName] !=
+                                          null &&
+                                      itemCount[tempList[index].foodName]! > 0
                                   ? Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        removeItemsToMealList(
-                                            tempList[index], mealCount);
-                                        itemCount[tempList[index]
-                                            .foodName] =
-                                            (itemCount[tempList[index]
-                                                .foodName]! -
-                                                1)
-                                                .clamp(0, double.infinity)
-                                                .toInt();
-                                      });
-                                    },
-                                    child: const Icon(
-                                      Icons.remove,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    "${itemCount[tempList[index].foodName]}",
-                                    style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        addItemsToMealList(
-                                            tempList[index], mealCount);
-                                        itemCount[tempList[index]
-                                            .foodName] =
-                                            (itemCount[tempList[index]
-                                                .foodName] ??
-                                                0) +
-                                                1;
-                                      });
-                                    },
-                                    child: const Icon(
-                                      Icons.add,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              )
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              removeItemsToMealList(
+                                                  tempList[index], mealCount);
+                                              itemCount[tempList[index]
+                                                  .foodName] = (itemCount[
+                                                          tempList[index]
+                                                              .foodName]! -
+                                                      1)
+                                                  .clamp(0, double.infinity)
+                                                  .toInt();
+                                            });
+                                          },
+                                          child: const Icon(
+                                            Icons.remove,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Text(
+                                          "${itemCount[tempList[index].foodName]}",
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              addItemsToMealList(
+                                                  tempList[index], mealCount);
+                                              itemCount[tempList[index]
+                                                  .foodName] = (itemCount[
+                                                          tempList[index]
+                                                              .foodName] ??
+                                                      0) +
+                                                  1;
+                                            });
+                                          },
+                                          child: const Icon(
+                                            Icons.add,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                   : InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    addItemsToMealList(
-                                        tempList[index], mealCount);
-                                    itemCount[tempList[index].foodName] =
-                                        (itemCount[tempList[index]
-                                            .foodName] ??
-                                            0) +
-                                            1;
-                                  });
-                                },
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.black,
-                                ),
-                              ),
+                                      onTap: () {
+                                        setState(() {
+                                          addItemsToMealList(
+                                              tempList[index], mealCount);
+                                          itemCount[tempList[index].foodName] =
+                                              (itemCount[tempList[index]
+                                                          .foodName] ??
+                                                      0) +
+                                                  1;
+                                        });
+                                      },
+                                      child: const Icon(
+                                        Icons.add,
+                                        color: Colors.black,
+                                      ),
+                                    ),
                             ),
                           ),
                         ],
@@ -407,7 +477,6 @@ class HomeController extends GetxController {
       print("Food selection completed.");
     }
   }
-
 
   double get breakfastCalories {
     // Use this to get total breakfast calories
@@ -471,16 +540,15 @@ class HomeController extends GetxController {
     return count;
   }
 
-  String get status{
-    if( bmi < 18.5){
+  String get status {
+    if (bmi < 18.5) {
       return " Underweight";
-    }else if(bmi > 18.5 && bmi < 24.9){
+    } else if (bmi > 18.5 && bmi < 24.9) {
       return "Health Weight";
-    }else if (bmi > 25 && bmi < 29.9){
+    } else if (bmi > 25 && bmi < 29.9) {
       return "Overweight";
-    }else{
+    } else {
       return "Obesity";
     }
   }
-
 }

@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen>
     checkTheNewUser();
 
     // Navigate after delay
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 3), () {
       if (!isFirstTime) {
         Get.off(const GetStarted(), binding: GetStartedBinder());
       } else {
