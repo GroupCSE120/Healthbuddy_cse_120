@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_buddy/Controllers/home_controller.dart';
 import 'package:health_buddy/constants/app_color.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -192,7 +193,7 @@ class Home extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "BMI : ${controller.bmi}",
+                                    "BMI : ${controller.bmi.toString().substring(0,5)}",
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 22,
@@ -223,6 +224,45 @@ class Home extends StatelessWidget {
                             ],
                           ),
                         ),
+                        SizedBox(height: 10,),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white70, width: 1.0, ),
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: AppColors.cardColor,
+                          ),
+                          child: CarouselSlider(
+                              items: controller.foodList.map((i){
+                                return Builder(
+                                    builder: (context){
+                                      return Container(
+                                        width: MediaQuery.of(context).size.width,
+                                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.amber
+                                        ),
+                                        child: Text("text : ${i.foodName}"),
+                                      );
+                                    },
+                                );
+                              }).toList(),
+                              options: CarouselOptions(
+                                height: 400,
+                                aspectRatio: 16/9,
+                                viewportFraction: 0.8,
+                                initialPage: 0,
+                                enableInfiniteScroll: true,
+                                reverse: false,
+                                autoPlay: true,
+                                autoPlayInterval: Duration(seconds: 3),
+                                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                enlargeCenterPage: true,
+                                enlargeFactor: 0.3,
+                                // onPageChanged: callbackFunction,
+                                scrollDirection: Axis.horizontal,
+                              )),
+                        )
                       ],
                     ),
                   ),

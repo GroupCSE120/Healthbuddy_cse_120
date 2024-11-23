@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:health_buddy/Modals/food_modal.dart';
 
 class LoadData {
-  List<FoodModal> _allFoodItemsList = [];
+  List<FoodModal> allFoodItemsList = [];
 
   Future<List<FoodModal>> getCsvData() async {
     try {
@@ -11,8 +11,8 @@ class LoadData {
           await rootBundle.loadString("assets/csv/food_list_csv.csv");
       List<List<dynamic>> data = const CsvToListConverter().convert(rawData);
       print(data);
-      _allFoodItemsList = _mapDataFromCsv(data);
-      return _allFoodItemsList; // Map and returns data after loading CSV
+      allFoodItemsList = _mapDataFromCsv(data);
+      return allFoodItemsList; // Map and returns data after loading CSV
     } catch (e) {
       print("Error loading CSV: $e");
       return [];
@@ -55,7 +55,7 @@ class LoadData {
 
     for (var element in list) {
       int index = int.parse(element) - 1;
-      foodList.add(_allFoodItemsList[index]);
+      foodList.add(allFoodItemsList[index]);
     }
     return foodList;
   }

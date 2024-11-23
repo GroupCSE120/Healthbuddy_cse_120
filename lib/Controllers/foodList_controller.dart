@@ -10,7 +10,15 @@ class FoodListController extends GetxController{
   late List<bool> selectedItems = [];
   HomeController obj = HomeController();
 
-  final _loadData = LoadData();
+  LoadData _loadData = LoadData();
+
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    print(_loadData.allFoodItemsList);
+  }
 
   @override
   void onReady(){
@@ -19,7 +27,7 @@ class FoodListController extends GetxController{
   }
 
   void getFoodItemList() async{
-    foodList = await _loadData.getCsvData();
+    foodList = Get.find<HomeController>().foodList;
     selectedItems = List<bool>.filled(foodList.length,false);
     update();
   }
