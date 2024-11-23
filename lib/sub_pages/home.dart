@@ -207,10 +207,6 @@ class Home extends StatelessWidget {
                                       onPressed: () {
                                         controller.bmiBottomSheet();
                                       },
-
-                                      icon: const Icon(Icons.help,
-                                          color: Colors.white),
-
                                       icon: Icon(Icons.help, color: Colors.lightBlueAccent.shade100.withAlpha(500)),
 
                                     ),

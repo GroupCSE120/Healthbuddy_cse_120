@@ -464,7 +464,7 @@ class HomeController extends GetxController {
     }
     return count;
   }
-=======
+
   String get status{
     if( bmi < 18.5){
       return " Underweight";
@@ -476,7 +476,5 @@ class HomeController extends GetxController {
       return "Obesity";
     }
   }
-
-// weight / (height/ 100)^2
 
 }
