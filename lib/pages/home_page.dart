@@ -2,6 +2,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_buddy/sub_pages/another.dart';
+import 'package:health_buddy/sub_pages/calorie_calculator.dart';
 import 'package:health_buddy/sub_pages/diet.dart';
 import 'package:health_buddy/sub_pages/home.dart';
 import 'package:health_buddy/sub_pages/profile.dart';
@@ -18,13 +19,15 @@ class HomePage extends StatelessWidget {
         return Scaffold(
           body: PageView.builder(
             controller: controller.pageController,
-            itemCount: 3,
+            itemCount: 4,
             itemBuilder: (context, index) {
               if (index == 0) {
                 return const Home();
               } else if (index == 1) {
                 return const Diet();
               } else if (index == 2){
+                return const CalorieCalculator();
+              }else if (index == 3){
                 return const Profile();
               }
               return const Center(child: Text("Error 404: Page Not Found"));
@@ -39,6 +42,7 @@ class HomePage extends StatelessWidget {
             icons: const [
               Icons.home_filled,
               Icons.food_bank,
+              Icons.calculate,
               Icons.person_rounded,
             ],
             activeIndex: controller.currentPageIndex,

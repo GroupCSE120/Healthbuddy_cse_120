@@ -9,16 +9,8 @@ class Goals extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GoalsController>(
-      init: GoalsController(), // Initialize the controller
+    return GetBuilder<GoalsController>(// Initialize the controller
       builder: (controller) {
-        final calorieController =
-        TextEditingController(text: controller.calories.toString());
-        final proteinController =
-        TextEditingController(text: controller.proteins.toString());
-        final fatController =
-        TextEditingController(text: controller.fats.toString());
-
         return Scaffold(
           backgroundColor: AppColors.bgColor,
           appBar: AppBar(
@@ -37,39 +29,27 @@ class Goals extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 _buildGoalSetter(
-                  controller: calorieController,
+                  controller: controller.calorieController,
+                  labelText : controller.calorieGoal,
                   title: 'Set Calories',
                   keyboardType: TextInputType.number,
                   unit: "Cal",
-                  onChanged: (value) {
-                    if (value.isNotEmpty) {
-                      controller.setCalories(double.parse(value));
-                    }
-                  },
                 ),
                 const SizedBox(height: 20),
                 _buildGoalSetter(
-                  controller: proteinController,
+                  controller: controller.proteinController,
+                  labelText : controller.proteinsGoal,
                   title: 'Set Proteins',
                   keyboardType: TextInputType.number,
                   unit: "g",
-                  onChanged: (value) {
-                    if (value.isNotEmpty) {
-                      controller.setProtein(double.parse(value));
-                    }
-                  },
                 ),
                 const SizedBox(height: 20),
                 _buildGoalSetter(
-                  controller: fatController,
+                  controller: controller.fatController,
+                  labelText : controller.fatGoal,
                   title: 'Set Fats',
                   keyboardType: TextInputType.number,
                   unit: "g",
-                  onChanged: (value) {
-                    if (value.isNotEmpty) {
-                      controller.setFats(double.parse(value));
-                    }
-                  },
                 ),
               ],
             ),
@@ -86,9 +66,7 @@ class Goals extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                controller.setCalories(double.tryParse(calorieController.text) ?? 0.0);
-                controller.setProtein(double.tryParse(proteinController.text) ?? 0.0);
-                controller.setFats(double.tryParse(fatController.text) ?? 0.0);
+                controller.saveGoals();
 
                 Get.snackbar('Goals Updated',
                     'Your Goals are set successfully!',
@@ -123,10 +101,10 @@ class Goals extends StatelessWidget {
 
   Widget _buildGoalSetter({
     required TextEditingController controller,
+    required String labelText,
     required String title,
     TextInputType keyboardType = TextInputType.number,
     required String unit,
-    required Function(String) onChanged,
   }) {
     return Container(
       padding: const EdgeInsets.all(12.0),
@@ -149,13 +127,13 @@ class Goals extends StatelessWidget {
                 child: TextField(
                   controller: controller,
                   keyboardType: keyboardType,
-                  onChanged: onChanged,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: AppColors.lightBlue,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
+                    hintText: labelText,
                   ),
                   style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
                 ),

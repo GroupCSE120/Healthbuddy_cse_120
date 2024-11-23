@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_buddy/Binders/foodList_binder.dart';
 import 'package:health_buddy/Binders/goal_binder.dart';
 import 'package:health_buddy/Controllers/home_controller.dart';
 import 'package:health_buddy/constants/app_color.dart';
+import 'package:health_buddy/sub_pages/profilehelper/foodList.dart';
 import 'package:health_buddy/sub_pages/profilehelper/goals.dart';
 
 import 'profilehelper/edit_profile.dart';
@@ -113,6 +115,7 @@ class Profile extends StatelessWidget {
                   SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
+                      Get.to(const Foodlist(),binding: FoodListbinder(),transition: Transition.leftToRight);
 
                     },
                     style: ElevatedButton.styleFrom(
