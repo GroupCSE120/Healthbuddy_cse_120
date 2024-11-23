@@ -27,6 +27,10 @@ class HomeController extends GetxController {
   List<FoodModal> commonDinnerListItems = [];
   List<FoodModal> commonFavouriteListItems = [];
 
+  int goalsCalories = 0;
+  int goalsProteins = 0;
+  int goalsFats = 0;
+
   final LoadData _loadData = LoadData();
 
   @override
@@ -79,6 +83,10 @@ class HomeController extends GetxController {
       isBP: isBP,
       isDisability: isDisability,
     );
+
+    goalsCalories = sharedPreferences.getInt('calorieGoal') ?? 0;
+    goalsProteins = sharedPreferences.getInt('proteinsGoal') ?? 0;
+    goalsFats = sharedPreferences.getInt('fatsGoal') ?? 0;
 
     getBreakfastFoodData(DateTime.now());
     getDinnerFoodData(DateTime.now());

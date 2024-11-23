@@ -4,25 +4,32 @@ import 'package:health_buddy/Modals/food_modal.dart';
 import 'package:health_buddy/repository/load_data.dart';
 
 class FoodListController extends GetxController{
-  late List<List<FoodModal>> foodLists = [];
+  late List<List<FoodModal>> userFoodLists = [];
   late List<String> listTitles = [];
-  late List<FoodModal> foodList = [];
+  List<FoodModal> foodList = [];
   late List<bool> selectedItems = [];
   HomeController obj = HomeController();
 
-  final _loadData = LoadData();
+
+  @override
+  void onInit() {
+    foodList = Get.find<HomeController>().foodList;
+    selectedItems = List<bool>.filled(foodList.length,false);
+
+    super.onInit();
+  }
 
   @override
   void onReady(){
     super.onReady();
-    getFoodItemList();
+    // getFoodItemList();
   }
 
-  void getFoodItemList() async{
-    foodList = await _loadData.getCsvData();
-    selectedItems = List<bool>.filled(foodList.length,false);
-    update();
-  }
+  // void getFoodItemList() async{
+  //   foodList = await _loadData.getCsvData();
+  //   selectedItems = List<bool>.filled(foodList.length,false);
+  //   update();
+  // }
 
 
   void createFoodList(String title){
@@ -33,7 +40,7 @@ class FoodListController extends GetxController{
       }
     }
     if(selectedFoods.isNotEmpty){
-      foodLists.add(selectedFoods);
+      userFoodLists.add(selectedFoods);
       listTitles.add(title);
       update();
     }

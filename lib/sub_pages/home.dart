@@ -96,23 +96,28 @@ class Home extends StatelessWidget {
                                   height: 15,
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Container(
                                           width: 145,
                                           decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                               color: Colors.grey.shade800
                                                   .withOpacity(0.5)),
                                           padding: const EdgeInsets.all(12),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                                CrossAxisAlignment.center,
                                             children: [
                                               const Icon(
                                                 Icons.height,
@@ -139,20 +144,24 @@ class Home extends StatelessWidget {
                                       ],
                                     ),
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Container(
                                           width: 145,
                                           decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                               color: Colors.grey.shade800
                                                   .withOpacity(0.5)),
                                           padding: const EdgeInsets.all(12),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                                CrossAxisAlignment.center,
                                             children: [
                                               const Icon(
                                                 Icons.fitness_center,
@@ -198,9 +207,9 @@ class Home extends StatelessWidget {
                                       onPressed: () {
                                         controller.bmiBottomSheet();
                                       },
-                                      icon: Icon(Icons.help,
-                                          color: Colors.lightBlueAccent.shade100
-                                              .withAlpha(500)),
+                                      icon: Icon(Icons.help_outline_rounded,
+                                          color:
+                                              Colors.lightBlueAccent.shade100),
                                     ),
                                   ],
                                 ),
@@ -210,8 +219,8 @@ class Home extends StatelessWidget {
                                 Text(
                                   "Status: ${controller.status}",
                                   style: TextStyle(
-                                    color: AppColors.lightGreen,
-                                    fontSize: 18,
+                                    color: AppColors.lightBlue,
+                                    fontSize: 13,
                                     fontWeight: FontWeight.normal,
                                   ),
                                 ),
@@ -223,7 +232,6 @@ class Home extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
           );
