@@ -15,6 +15,7 @@ class HomeController extends GetxController {
   PageController pageController = PageController();
   bool isDarkMode = false;
   int dailyGoal = 0;
+  String selectedGoal = "Calories";
   late UserModal user;
   late List<FoodModal> foodList;
 
@@ -116,6 +117,11 @@ class HomeController extends GetxController {
       return dinnerItems;
     }
     return [];
+  }
+
+  void updateSelectedGoal(String value){
+    selectedGoal = value;
+    update();
   }
 
   void bmiBottomSheet() {
@@ -464,7 +470,7 @@ class HomeController extends GetxController {
     }
     return count;
   }
-=======
+
   String get status{
     if( bmi < 18.5){
       return " Underweight";

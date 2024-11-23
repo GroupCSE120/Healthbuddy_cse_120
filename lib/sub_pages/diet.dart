@@ -46,8 +46,12 @@ class Diet extends StatelessWidget {
                             child: Text("Fats Remaining"),
                           ),
                         ],
-                        value: "Protein",
-                        onChanged: (value) {},
+                        value: controller.selectedGoal,
+                        onChanged: (value) {
+                          if(value != null){
+                            controller.updateSelectedGoal(value);
+                          }
+                        },
                         isExpanded: true,
                         style: const TextStyle(color: Colors.white),
                         dropdownColor: AppColors.bgColor,
