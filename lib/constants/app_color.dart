@@ -6,7 +6,7 @@ class AppColors{
   static Color green = const Color(0xff7ED957);
   static Color lightGreen = const Color(0xffB7E4A8);
 
-  static Color cardColor = Colors.grey.shade900;
+  static Color cardColor = const Color(0xff151515);
   static Color bgColor = Colors.black;
 
 }

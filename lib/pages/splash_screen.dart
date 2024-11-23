@@ -77,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.darkBg,
+      backgroundColor: AppColors.bgColor,
       body: Center(
         child: FadeTransition(
           opacity: _fadeAnimation,
@@ -86,21 +86,9 @@ class _SplashScreenState extends State<SplashScreen>
             children: [
               ScaleTransition(
                 scale: _scaleAnimation,
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.lightBlue.withOpacity(0.2),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.darkBlue.withOpacity(0.5),
-                        blurRadius: 10,
-                        spreadRadius: 2,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
+                child: SizedBox(
+                  width: 100,
+                  height: 100,
                   child: ClipOval(
                     child: Image.asset(
                       "assets/images/logo.jpg",
@@ -112,19 +100,12 @@ class _SplashScreenState extends State<SplashScreen>
               const SizedBox(height: 20),
               FadeTransition(
                 opacity: _fadeAnimation,
-                child: Text(
+                child: const Text(
                   'Health Buddy',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 32,
-                    color: AppColors.green,
-                    shadows: [
-                      Shadow(
-                        color: AppColors.lightBlue,
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20,
+                    color: Colors.white,
                   ),
                 ),
               ),
