@@ -15,40 +15,43 @@ class Goals extends StatelessWidget {
           backgroundColor: AppColors.bgColor,
           body: SafeArea(
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Set your Goals accordingly...",
-                    style: TextStyle(color: Colors.white, fontSize: 24),
-                  ),
-                  const SizedBox(height: 30),
-                  _buildGoalSetter(
-                    controller: controller.calorieController,
-                    labelText: "Enter Your Daily Calories Goals",
-                    title: 'Set Calories',
-                    keyboardType: TextInputType.number,
-                    unit: "Cal",
-                  ),
-                  const SizedBox(height: 20),
-                  _buildGoalSetter(
-                    controller: controller.proteinController,
-                    labelText: "Enter Your Daily Protein Goals",
-                    title: 'Set Proteins',
-                    keyboardType: TextInputType.number,
-                    unit: "g",
-                  ),
-                  const SizedBox(height: 20),
-                  _buildGoalSetter(
-                    controller: controller.fatController,
-                    labelText: "Enter Your Daily Fats Goals",
-                    title: 'Set Fats',
-                    keyboardType: TextInputType.number,
-                    unit: "g",
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 10),
+                    const Text(
+                      "Set your Goals accordingly...",
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    ),
+                    const SizedBox(height: 30),
+                    _buildGoalSetter(
+                      controller: controller.calorieController,
+                      labelText: "Enter Your Daily Calories Goals",
+                      title: 'Set Calories',
+                      keyboardType: TextInputType.number,
+                      unit: "Cal",
+                    ),
+                    const SizedBox(height: 20),
+                    _buildGoalSetter(
+                      controller: controller.proteinController,
+                      labelText: "Enter Your Daily Protein Goals",
+                      title: 'Set Proteins',
+                      keyboardType: TextInputType.number,
+                      unit: "g",
+                    ),
+                    const SizedBox(height: 20),
+                    _buildGoalSetter(
+                      controller: controller.fatController,
+                      labelText: "Enter Your Daily Fats Goals",
+                      title: 'Set Fats',
+                      keyboardType: TextInputType.number,
+                      unit: "g",
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -64,19 +67,16 @@ class Goals extends StatelessWidget {
                     ),
                   ),
                   backgroundColor:
-                      WidgetStatePropertyAll(Colors.indigo.shade900)),
+                      WidgetStatePropertyAll(Colors.blue.shade900)),
               onPressed: () {
                 controller.saveGoals();
 
                 Get.snackbar(
-                  'Goals Updated',
-                  'Your Goals are set successfully!',
-                  snackPosition: SnackPosition.BOTTOM,
-                  backgroundColor: Colors.green,
-                  colorText: Colors.white,
-                  duration: const Duration(seconds: 3)
-                );
-
+                    'Goals Updated', 'Your Goals are set successfully!',
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.green,
+                    colorText: Colors.white,
+                    duration: const Duration(seconds: 3));
               },
               child: const Text(
                 'Save My Goals',
@@ -107,7 +107,7 @@ class Goals extends StatelessWidget {
         Text(
           "$title :",
           style: TextStyle(
-            color: Colors.indigo.shade400,
+            color: Colors.blue.shade200,
             fontSize: 20,
           ),
         ),
@@ -130,7 +130,11 @@ class Goals extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                     fontSize: 15,
                   ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(color: Colors.blue.shade400)),
                 ),
+                cursorColor: Colors.blue,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,

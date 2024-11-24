@@ -11,110 +11,122 @@ class Foodlist extends StatelessWidget {
     return GetBuilder<FoodListController>(builder: (controller) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Create/Update Lists'),
-          backgroundColor: AppColors.darkBlue,
+          title: const Text('Create / Update Lists'),
+          titleTextStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+          ),
+          backgroundColor: Colors.blue.shade900,
+          iconTheme: const IconThemeData(color: Colors.white),
         ),
         body: controller.userFoodLists.isEmpty
             ? Container(
-                color: Colors.grey.shade900,
+                color: AppColors.bgColor,
                 child: const Center(
                   child: Text(
                     "No Lists Created Yet",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: TextStyle(fontSize: 15, color: Colors.white70),
                   ),
                 ),
               )
             : Container(
-                color: AppColors.cardColor,
+                color: AppColors.bgColor,
                 child: ListView.builder(
                   itemCount: controller.userFoodLists.length,
                   itemBuilder: (context, index) {
                     final foodList = controller.userFoodLists[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        padding: const EdgeInsets.all(2.0),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: AppColors.lightBlue, width: 1.0),
-                          borderRadius: BorderRadius.circular(8.0),
+                    return Card(
+                      elevation: 20,
+                      color: AppColors.cardColor,
+                      child: ListTile(
+                        title: Text(
+                          "${index + 1}. ${controller.listTitles[index]}",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
                         ),
-                        child: ListTile(
-                          title: Text(
-                            "${index + 1}: ${controller.listTitles[index]}",
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 18),
+                        subtitle: Text(
+                          "Items: ${foodList.length}",
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal,
                           ),
-                          subtitle: Text(
-                            "Items: ${foodList.length}",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
-                          onTap: () {
-                            // Show details of the list
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              // Allow the bottom sheet to expand based on content
-                              builder: (context) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    // Ensure it takes only as much space as needed
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      // Displaying the list title
-                                      Text(
-                                        controller.listTitles[index],
+                        ),
+                        onTap: () {
+                          // Show details of the list
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: AppColors.cardColor,
+                            // Allow the bottom sheet to expand based on content
+                            builder: (context) {
+                              return Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  // Ensure it takes only as much space as needed
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Displaying the list title
+                                    Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Text(
+                                        "List Name: ${controller.listTitles[index]}",
                                         style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
                                       ),
-                                      const SizedBox(height: 16),
+                                    ),
+                                    const SizedBox(height: 16),
 
-                                      // Use SingleChildScrollView to prevent overflow in case of large lists
-                                      SizedBox(
-                                        height: 300,
-                                        // Set a fixed height to ensure scrollable content
-                                        child: SingleChildScrollView(
-                                          child: ListView.builder(
-                                            shrinkWrap: true,
-                                            // Ensures ListView doesn't try to take all available space
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            // Disable ListView scroll since we have a parent scroll
-                                            itemCount: foodList.length,
-                                            itemBuilder: (context, foodIndex) {
-                                              final food = foodList[foodIndex];
-                                              return ListTile(
-                                                title: Text(food.foodName),
-                                                subtitle: Text(
-                                                    "Calories: ${food.calories}"),
-                                              );
-                                            },
-                                          ),
-                                        ),
+                                    SizedBox(
+                                      height: 300,
+                                      // Set a fixed height to ensure scrollable content
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: foodList.length,
+                                        itemBuilder: (context, foodIndex) {
+                                          final food = foodList[foodIndex];
+                                          return ListTile(
+                                            title: Text(
+                                              food.foodName,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            subtitle: Text(
+                                              "Calories: ${food.calories}",
+                                              style: const TextStyle(
+                                                  color: Colors.white70,
+                                                  fontSize: 12),
+                                            ),
+                                          );
+                                        },
                                       ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
                     );
                   },
                 ),
               ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => {
-            print("FAB clicked"),
-            _showCreateListModal(context, controller),
+          onPressed: () {
+            _showCreateListModal(context, controller);
           },
-          child: const Icon(Icons.add),
+          backgroundColor: Colors.blue.shade900,
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ),
       );
     });
@@ -130,21 +142,22 @@ class Foodlist extends StatelessWidget {
       backgroundColor: AppColors.cardColor,
       builder: (context) {
         return StatefulBuilder(
-          builder:
-              (BuildContext context, void Function(void Function()) setState) {
+          builder: (context, setState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                // Ensure it takes only as much space as needed
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Create New List",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  const Padding(
+                    padding: EdgeInsets.all(12),
+                    child: Text(
+                      "Create New List",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -158,9 +171,8 @@ class Foodlist extends StatelessWidget {
                     style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 16),
-                  // Use SingleChildScrollView to prevent layout issues in case the list is too long
                   SizedBox(
-                    height: 300, // Set a height to ensure content is scrollable
+                    height: 500,
                     child: ListView.builder(
                       itemCount: controller.foodList.length,
                       itemBuilder: (context, index) {
@@ -187,31 +199,7 @@ class Foodlist extends StatelessWidget {
                           activeColor: Colors.lightBlue,
                         );
                       },
-
-                    // child: SingleChildScrollView(
-                    //   child: ListView.builder(
-                    //     shrinkWrap: true,
-                    //     // Ensure ListView doesn't try to take all available space
-                    //     physics: const NeverScrollableScrollPhysics(),
-                    //     // Disable ListView scroll since we have a parent scroll
-                    //     itemCount: controller.foodList.length,
-                    //     itemBuilder: (context, index) {
-                    //       final food = controller.foodList[index];
-                    //       return CheckboxListTile(
-                    //         title: Text(food.foodName),
-                    //         subtitle: Text("Calories: ${food.calories}"),
-                    //         value: controller.selectedItems[index],
-                    //         onChanged: (bool? isSelected) {
-                    //           controller.selectedItems[index] =
-                    //               isSelected ?? false;
-                    //           // controller.update();
-                    //           setState(() {});
-                    //         },
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
-                  ),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -221,7 +209,12 @@ class Foodlist extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: const Text("Cancel"),
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(
+                            color: AppColors.lightBlue,
+                          ),
+                        ),
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -231,7 +224,21 @@ class Foodlist extends StatelessWidget {
                             Navigator.pop(context);
                           }
                         },
-                        child: const Text("Create"),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                const WidgetStatePropertyAll(Colors.lightBlue),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            )),
+                        child: const Text(
+                          "Create",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   ),

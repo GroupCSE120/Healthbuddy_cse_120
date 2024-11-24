@@ -115,7 +115,7 @@ class Home extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "BMI : ${controller.bmi.toString()}",
+                                    "BMI : ${controller.bmi.toStringAsFixed(2)}",
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 22,
@@ -154,9 +154,12 @@ class Home extends StatelessWidget {
                               builder: (context) {
                                 return Container(
                                   width: MediaQuery.of(context).size.width,
-                                  margin: const EdgeInsets.symmetric(horizontal: 5.0,),
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 5.0,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: Colors.grey.shade800.withOpacity(0.5),
+                                    color:
+                                        Colors.grey.shade800.withOpacity(0.5),
                                     borderRadius: BorderRadius.circular(15),
                                   ),
                                   child: Padding(
@@ -170,7 +173,9 @@ class Home extends StatelessWidget {
                                               fontSize: 24,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        const SizedBox(height: 10,),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
                                         Text(
                                           "Glycemic Index : ${i.glycemicIndex}",
                                           style: const TextStyle(
