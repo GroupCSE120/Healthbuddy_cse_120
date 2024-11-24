@@ -72,28 +72,29 @@ class Home extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 20),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey.shade800,
-                              width: 2,
-                            ),
+                        Card(
+                          margin: const EdgeInsets.all(20),
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          margin: const EdgeInsets.all(20),
-                          padding: const EdgeInsets.all(8.0),
+                          elevation: 20,
+                          color: Colors.grey.shade900,
                           child: Column(
                             children: [
-                              Text(
-                                "BMI Status",
-                                style: TextStyle(
-                                  color: AppColors.lightBlue,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
+                              Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Text(
+                                  "BMI Status",
+                                  style: TextStyle(
+                                    color: AppColors.lightBlue,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   _buildStatCard(
                                     context,
@@ -114,7 +115,7 @@ class Home extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "BMI : ${controller.bmi.toString().substring(0, 5)}",
+                                    "BMI : ${controller.bmi.toString()}",
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 22,
@@ -132,13 +133,15 @@ class Home extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 15),
-                              Text(
-                                "Status: ${controller.status}",
-                                style: TextStyle(
-                                  color: AppColors.lightGreen,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.normal,
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: Text(
+                                  "Status: ${controller.status}",
+                                  style: TextStyle(
+                                    color: AppColors.lightGreen,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                                 ),
                               ),
                             ],
@@ -151,39 +154,80 @@ class Home extends StatelessWidget {
                               builder: (context) {
                                 return Container(
                                   width: MediaQuery.of(context).size.width,
-                                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                  margin: const EdgeInsets.symmetric(horizontal: 5.0,),
                                   decoration: BoxDecoration(
-                                      color: Colors.grey.shade800,
-                                    border: Border.all(color: AppColors.lightBlue, width: 1.5,),
-                                    borderRadius: BorderRadius.circular(8.0),
+                                    color: Colors.grey.shade800.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
-                                  child: Column(
-                                    children: [
-                                      Text("${i.foodName}", style: TextStyle(color: Colors.white, fontSize: 24,fontWeight: FontWeight.bold),),
-                                      Text("Glycemic Index : ${i.glycemicIndex}", style: TextStyle(color: Colors.white70),),
-                                      Text("Calories : ${i.calories} cal.", style: TextStyle(color: Colors.white70),),
-                                      Text("Proteins : ${i.protiens} g.", style: TextStyle(color: Colors.white70),),
-                                      Text("Fats : ${i.fats} g.", style: TextStyle(color: Colors.white70),),
-                                      Text("Carbohydrates : ${i.carbohydrates} g.", style: TextStyle(color: Colors.white70),),
-                                      Text("Sodium (Na) : ${i.sodium} g.", style: TextStyle(color: Colors.white70),),
-                                      Text("Potassium (K) : ${i.pottasium} g.", style: TextStyle(color: Colors.white70),),
-                                      Text("Magnesium (Mg) : ${i.magnesium} g.", style: TextStyle(color: Colors.white70),),
-                                    ],
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(15),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          i.foodName,
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const SizedBox(height: 10,),
+                                        Text(
+                                          "Glycemic Index : ${i.glycemicIndex}",
+                                          style: const TextStyle(
+                                              color: Colors.white70),
+                                        ),
+                                        Text(
+                                          "Calories : ${i.calories} cal.",
+                                          style: const TextStyle(
+                                              color: Colors.white70),
+                                        ),
+                                        Text(
+                                          "Proteins : ${i.protiens} g.",
+                                          style: const TextStyle(
+                                              color: Colors.white70),
+                                        ),
+                                        Text(
+                                          "Fats : ${i.fats} g.",
+                                          style: const TextStyle(
+                                              color: Colors.white70),
+                                        ),
+                                        Text(
+                                          "Carbohydrates : ${i.carbohydrates} g.",
+                                          style: const TextStyle(
+                                              color: Colors.white70),
+                                        ),
+                                        Text(
+                                          "Sodium (Na) : ${i.sodium} g.",
+                                          style: const TextStyle(
+                                              color: Colors.white70),
+                                        ),
+                                        Text(
+                                          "Potassium (K) : ${i.pottasium} g.",
+                                          style: const TextStyle(
+                                              color: Colors.white70),
+                                        ),
+                                        Text(
+                                          "Magnesium (Mg) : ${i.magnesium} g.",
+                                          style: const TextStyle(
+                                              color: Colors.white70),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
                             );
                           }).toList(),
                           options: CarouselOptions(
-                            height: 250,
-                            aspectRatio: 18 / 9,
+                            height: 260,
                             viewportFraction: 0.8,
                             initialPage: 0,
                             enableInfiniteScroll: true,
                             reverse: false,
                             autoPlay: true,
                             autoPlayInterval: const Duration(seconds: 3),
-                            autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                            autoPlayAnimationDuration:
+                                const Duration(milliseconds: 800),
                             autoPlayCurve: Curves.fastOutSlowIn,
                             enlargeCenterPage: true,
                             enlargeFactor: 0.2,
@@ -204,7 +248,8 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard(BuildContext context, {required IconData icon, required String value, required String label}) {
+  Widget _buildStatCard(BuildContext context,
+      {required IconData icon, required String value, required String label}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
