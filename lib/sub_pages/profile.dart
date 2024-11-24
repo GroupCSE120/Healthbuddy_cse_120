@@ -110,9 +110,13 @@ class Profile extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     // Action for "Set Goals"
-                    Get.to(const Goals(),
-                        binding: GoalBinder(),
-                        transition: Transition.leftToRight);
+                    Get.to(
+                      const Goals(),
+                      binding: GoalBinder(),
+                      transition: Transition.leftToRight,
+                    )?.then(
+                      (value) => controller.update(),
+                    );
                   },
                   style: ButtonStyle(
                     backgroundColor:
@@ -149,7 +153,7 @@ class Profile extends StatelessWidget {
                   },
                   style: ButtonStyle(
                     backgroundColor:
-                    WidgetStatePropertyAll(AppColors.cardColor),
+                        WidgetStatePropertyAll(AppColors.cardColor),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -180,7 +184,7 @@ class Profile extends StatelessWidget {
                   },
                   style: ButtonStyle(
                     backgroundColor:
-                    WidgetStatePropertyAll(AppColors.cardColor),
+                        WidgetStatePropertyAll(AppColors.cardColor),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),

@@ -93,6 +93,34 @@ class Home extends StatelessWidget {
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                 ),
+
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 145,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: Colors.grey.shade800
+                                                  .withOpacity(0.5)),
+                                          padding: const EdgeInsets.all(12),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                Icons.height,
+
                               ),
                               const SizedBox(
                                 height: 15,
@@ -139,6 +167,32 @@ class Home extends StatelessWidget {
                                           color: Colors.white70,
                                           fontSize: 13,
                                         ),
+
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 145,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: Colors.grey.shade800
+                                                  .withOpacity(0.5)),
+                                          padding: const EdgeInsets.all(12),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                Icons.fitness_center,
+
                                       ),
                                     ],
                                   ),
@@ -168,6 +222,7 @@ class Home extends StatelessWidget {
                                             Text(
                                               '${controller.user.weight}',
                                               style: const TextStyle(
+
                                                 color: Colors.white,
                                                 fontSize: 30,
                                               ),
@@ -199,6 +254,28 @@ class Home extends StatelessWidget {
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,
                                     ),
+
+                                    IconButton(
+                                      onPressed: () {
+                                        controller.bmiBottomSheet();
+                                      },
+                                      icon: Icon(Icons.help_outline_rounded,
+                                          color:
+                                              Colors.lightBlueAccent.shade100),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "Status: ${controller.status}",
+                                  style: TextStyle(
+                                    color: AppColors.lightBlue,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.normal,
+
+
                                   ),
                                   IconButton(
                                     onPressed: () {

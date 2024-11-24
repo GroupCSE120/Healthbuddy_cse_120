@@ -14,7 +14,7 @@ class Foodlist extends StatelessWidget {
           title: const Text('Create/Update Lists'),
           backgroundColor: AppColors.darkBlue,
         ),
-        body: controller.foodLists.isEmpty
+        body: controller.userFoodLists.isEmpty
             ? Container(
                 color: Colors.grey.shade900,
                 child: const Center(
@@ -27,6 +27,15 @@ class Foodlist extends StatelessWidget {
             : Container(
                 color: AppColors.cardColor,
                 child: ListView.builder(
+
+                  itemCount: controller.userFoodLists.length,
+                  itemBuilder: (context, index) {
+                    final foodList = controller.userFoodLists[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        padding: const EdgeInsets.all(2.0),
+
                   itemCount: controller.foodLists.length,
                   itemBuilder: (context, index) {
                     final foodList = controller.foodLists[index];
@@ -42,6 +51,13 @@ class Foodlist extends StatelessWidget {
                         child: ListTile(
                           title: Text(
                             "${index + 1}: ${controller.listTitles[index]}",
+
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            "Items: ${foodList.length}",
+                            style: const TextStyle(color: Colors.white70),
                             style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                           subtitle: Text(
@@ -126,6 +142,10 @@ class Foodlist extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Ensure the modal expands to fit its content
+      backgroundColor: AppColors.cardColor,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
       builder: (context) {
         return StatefulBuilder(
           builder:
@@ -142,6 +162,8 @@ class Foodlist extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -149,6 +171,12 @@ class Foodlist extends StatelessWidget {
                     controller: titleController,
                     decoration: const InputDecoration(
                       labelText: "List Title",
+
+                      labelStyle: TextStyle(color: Colors.white70),
+                      border: OutlineInputBorder(),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -156,6 +184,33 @@ class Foodlist extends StatelessWidget {
                   // Use SingleChildScrollView to prevent layout issues in case the list is too long
                   SizedBox(
                     height: 300, // Set a height to ensure content is scrollable
+//                     child: ListView.builder(
+//                       itemCount: controller.foodList.length,
+//                       itemBuilder: (context, index) {
+//                         final food = controller.foodList[index];
+//                         return CheckboxListTile(
+//                           title: Text(
+//                             food.foodName,
+//                             style: const TextStyle(color: Colors.white),
+//                           ),
+//                           subtitle: Text(
+//                             "Calories: ${food.calories}",
+//                             style: const TextStyle(color: Colors.white),
+//                           ),
+//                           value: controller.selectedItems[index],
+//                           onChanged: (bool? isSelected) {
+//                             controller.selectedItems[index] =
+//                                 isSelected ?? false;
+//                             setState(() {});
+//                           },
+//                           checkboxShape: RoundedRectangleBorder(
+//                             borderRadius: BorderRadius.circular(25),
+//                             side: const BorderSide(color: Colors.white),
+//                           ),
+//                           activeColor: Colors.lightBlue,
+//                         );
+//                       },
+
                     child: SingleChildScrollView(
                       child: ListView.builder(
                         shrinkWrap: true,
