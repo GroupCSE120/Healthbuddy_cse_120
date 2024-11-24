@@ -21,16 +21,17 @@ class EditProfile extends StatelessWidget {
           backgroundColor: AppColors.bgColor,
           appBar: AppBar(
             title: const Text('Edit Profile'),
-            backgroundColor: AppColors.darkBlue,
+            titleTextStyle: const TextStyle(color: Colors.white, fontSize: 22,),
+            backgroundColor: Colors.blue.shade900,
+            iconTheme: const IconThemeData(color: Colors.white),
           ),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
                 _buildSectionTitle("Basic Information"),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 _buildTextField(
                   controller: nameController,
                   label: "Name",
@@ -113,7 +114,8 @@ class EditProfile extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 30),
-                Center(
+                SizedBox(
+                  width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () async {
                       // Save user data
@@ -122,8 +124,6 @@ class EditProfile extends StatelessWidget {
                           double.tryParse(heightController.text) ?? 0.0;
                       controller.user.weight =
                           double.tryParse(weightController.text) ?? 0.0;
-
-
 
                       Get.snackbar(
                         'Profile Updated',
@@ -139,7 +139,7 @@ class EditProfile extends StatelessWidget {
                       Get.off(()=>{const HomePage(),});
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.lightBlue,
+                      backgroundColor: Colors.blue.shade900,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -153,6 +153,7 @@ class EditProfile extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ),
@@ -167,12 +168,15 @@ class EditProfile extends StatelessWidget {
 
   // Section Title
   Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: const TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
     );
   }

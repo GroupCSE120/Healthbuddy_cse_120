@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:health_buddy/constants/app_color.dart';
 import 'package:http/http.dart' as http;
 
 class ChatBot extends StatefulWidget {
@@ -37,7 +38,8 @@ class _ChatBotState extends State<ChatBot> with SingleTickerProviderStateMixin {
   Future<void> _sendMessage(String input) async {
     if (input.trim().isEmpty) return;
 
-    String? text = "You are my nutritionist, guide me according to the text given below: \n + ${input.trim()}";
+    String? text =
+        "You are my nutritionist, guide me according to the text given below: \n + ${input.trim()}";
 
     setState(() {
       _messages.add({'text': text, 'sender': "user"});
@@ -46,16 +48,16 @@ class _ChatBotState extends State<ChatBot> with SingleTickerProviderStateMixin {
 
     _textController.clear();
 
-    final String? togetherApiKey = "81ae561ed7fe920dd7d30a96b82a793feab87f4e3c1cb138d6283f3df5e1e3a8";
+    const String togetherApiKey =
+        "81ae561ed7fe920dd7d30a96b82a793feab87f4e3c1cb138d6283f3df5e1e3a8";
 
-    try{
+    try {
       final response = await http.post(
         Uri.parse('https://api.together.xyz/v1/chat/completions'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $togetherApiKey',
         },
-
         body: jsonEncode({
           'model': 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo',
           'messages': [
@@ -65,24 +67,24 @@ class _ChatBotState extends State<ChatBot> with SingleTickerProviderStateMixin {
         }),
       );
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         final assistantMessage = data['choices'][0]['message']['content'];
 
         setState(() {
-          _messages.add({'text' : assistantMessage, 'sender' : 'assistant'});
+          _messages.add({'text': assistantMessage, 'sender': 'assistant'});
         });
-      }
-      else{
+      } else {
         throw Exception('Failed to fetch response');
       }
-    }
-    catch (error) {
+    } catch (error) {
       setState(() {
-        _messages.add({'text': "I'm sorry, I couldn't process your request at the moment.", "sender" : "assistant"});
+        _messages.add({
+          'text': "I'm sorry, I couldn't process your request at the moment.",
+          "sender": "assistant"
+        });
       });
-    }
-    finally{
+    } finally {
       setState(() {
         _isTyping = false;
       });
@@ -121,7 +123,7 @@ class _ChatBotState extends State<ChatBot> with SingleTickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.grey[900],
+        backgroundColor: AppColors.cardColor,
         title: const Text(
           'Diet Assistant',
           style: TextStyle(color: Colors.white),
@@ -156,10 +158,16 @@ class _ChatBotState extends State<ChatBot> with SingleTickerProviderStateMixin {
                               animation: _animationController,
                               builder: (context, child) {
                                 return Opacity(
-                                  opacity: (dotIndex == (_animationController.value * 3).floor() % 3) ? 1 : 0.3,
+                                  opacity: (dotIndex ==
+                                          (_animationController.value * 3)
+                                                  .floor() %
+                                              3)
+                                      ? 1
+                                      : 0.3,
                                   child: const Text(
                                     '.',
-                                    style: TextStyle(color: Colors.white, fontSize: 18),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
                                   ),
                                 );
                               },
@@ -174,7 +182,8 @@ class _ChatBotState extends State<ChatBot> with SingleTickerProviderStateMixin {
                   final isUser = message['sender'] == 'user';
 
                   return Align(
-                    alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+                    alignment:
+                        isUser ? Alignment.centerRight : Alignment.centerLeft,
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 8.0),
                       padding: const EdgeInsets.all(12.0),
@@ -208,7 +217,8 @@ class _ChatBotState extends State<ChatBot> with SingleTickerProviderStateMixin {
             ),
             // Input field at the bottom
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 boxShadow: [
@@ -220,6 +230,8 @@ class _ChatBotState extends State<ChatBot> with SingleTickerProviderStateMixin {
                 ],
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
                     child: TextField(
@@ -227,9 +239,9 @@ class _ChatBotState extends State<ChatBot> with SingleTickerProviderStateMixin {
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         hintText: 'Type your message...',
-                        hintStyle: TextStyle(color: Colors.grey[500]),
+                        hintStyle: TextStyle(color: Colors.grey[700]),
                         filled: true,
-                        fillColor: Colors.grey[800],
+                        fillColor: AppColors.cardColor,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
                           borderSide: BorderSide.none,
@@ -239,7 +251,19 @@ class _ChatBotState extends State<ChatBot> with SingleTickerProviderStateMixin {
                   ),
                   const SizedBox(width: 8),
                   IconButton(
-                    icon: const Icon(Icons.send, color: Colors.blueAccent),
+                    icon: const Icon(Icons.send, color: Colors.black),
+                    style: ButtonStyle(
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      backgroundColor:
+                          const WidgetStatePropertyAll(Colors.blueAccent),
+                      padding: const WidgetStatePropertyAll(
+                        EdgeInsets.all(13),
+                      ),
+                    ),
                     onPressed: () => _sendMessage(_textController.text),
                   ),
                 ],

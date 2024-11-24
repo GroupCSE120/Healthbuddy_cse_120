@@ -30,4 +30,44 @@ class FoodModal {
     required this.bp,
     required this.id,
   });
+
+  // Convert object to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'foodName': foodName,
+      'glycemicIndex': glycemicIndex,
+      'calories': calories,
+      'carbohydrates': carbohydrates,
+      'protiens': protiens,
+      'fats': fats,
+      'sodium': sodium,
+      'pottasium': pottasium,
+      'magnesium': magnesium,
+      'calcium': calcium,
+      'fiber': fiber,
+      'sugar': sugar,
+      'bp': bp,
+      'id': id,
+    };
+  }
+
+  // Convert JSON to object
+  factory FoodModal.fromJson(Map<String, dynamic> json) {
+    return FoodModal(
+      foodName: json['foodName'],
+      glycemicIndex: json['glycemicIndex'],
+      calories: json['calories'],
+      carbohydrates: json['carbohydrates'],
+      protiens: json['protiens'],
+      fats: json['fats'],
+      sodium: json['sodium'],
+      pottasium: json['pottasium'],
+      magnesium: json['magnesium'],
+      calcium: json['calcium'],
+      fiber: json['fiber'],
+      sugar: json['sugar'],
+      bp: json['bp'],
+      id: json['id'],
+    );
+  }
 }
