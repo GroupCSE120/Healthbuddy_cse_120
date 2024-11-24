@@ -27,6 +27,7 @@ class Foodlist extends StatelessWidget {
             : Container(
                 color: AppColors.cardColor,
                 child: ListView.builder(
+
                   itemCount: controller.userFoodLists.length,
                   itemBuilder: (context, index) {
                     final foodList = controller.userFoodLists[index];
@@ -34,6 +35,14 @@ class Foodlist extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         padding: const EdgeInsets.all(2.0),
+
+                  itemCount: controller.foodLists.length,
+                  itemBuilder: (context, index) {
+                    final foodList = controller.foodLists[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        padding: EdgeInsets.all(2.0),
                         decoration: BoxDecoration(
                           border: Border.all(
                               color: AppColors.lightBlue, width: 1.0),
@@ -42,12 +51,18 @@ class Foodlist extends StatelessWidget {
                         child: ListTile(
                           title: Text(
                             "${index + 1}: ${controller.listTitles[index]}",
+
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 18),
                           ),
                           subtitle: Text(
                             "Items: ${foodList.length}",
                             style: const TextStyle(color: Colors.white70),
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                          subtitle: Text(
+                            "Items: ${foodList.length}",
+                            style: TextStyle(color: Colors.white70),
                           ),
                           onTap: () {
                             // Show details of the list
@@ -110,7 +125,10 @@ class Foodlist extends StatelessWidget {
                 ),
               ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _showCreateListModal(context, controller),
+          onPressed: () => {
+            print("FAB clicked"),
+            _showCreateListModal(context, controller),
+          },
           child: const Icon(Icons.add),
         ),
       );
@@ -128,6 +146,10 @@ class Foodlist extends StatelessWidget {
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) {
+      builder: (context) {
+        return StatefulBuilder(
+          builder:
+              (BuildContext context, void Function(void Function()) setState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -140,6 +162,7 @@ class Foodlist extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+
                       color: Colors.white,
                     ),
                   ),
@@ -148,41 +171,68 @@ class Foodlist extends StatelessWidget {
                     controller: titleController,
                     decoration: const InputDecoration(
                       labelText: "List Title",
+
                       labelStyle: TextStyle(color: Colors.white70),
                       border: OutlineInputBorder(),
                     ),
                     style: const TextStyle(color: Colors.white),
+
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   // Use SingleChildScrollView to prevent layout issues in case the list is too long
                   SizedBox(
                     height: 300, // Set a height to ensure content is scrollable
-                    child: ListView.builder(
-                      itemCount: controller.foodList.length,
-                      itemBuilder: (context, index) {
-                        final food = controller.foodList[index];
-                        return CheckboxListTile(
-                          title: Text(
-                            food.foodName,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          subtitle: Text(
-                            "Calories: ${food.calories}",
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          value: controller.selectedItems[index],
-                          onChanged: (bool? isSelected) {
-                            controller.selectedItems[index] =
-                                isSelected ?? false;
-                            setState(() {});
-                          },
-                          checkboxShape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            side: const BorderSide(color: Colors.white),
-                          ),
-                          activeColor: Colors.lightBlue,
-                        );
-                      },
+//                     child: ListView.builder(
+//                       itemCount: controller.foodList.length,
+//                       itemBuilder: (context, index) {
+//                         final food = controller.foodList[index];
+//                         return CheckboxListTile(
+//                           title: Text(
+//                             food.foodName,
+//                             style: const TextStyle(color: Colors.white),
+//                           ),
+//                           subtitle: Text(
+//                             "Calories: ${food.calories}",
+//                             style: const TextStyle(color: Colors.white),
+//                           ),
+//                           value: controller.selectedItems[index],
+//                           onChanged: (bool? isSelected) {
+//                             controller.selectedItems[index] =
+//                                 isSelected ?? false;
+//                             setState(() {});
+//                           },
+//                           checkboxShape: RoundedRectangleBorder(
+//                             borderRadius: BorderRadius.circular(25),
+//                             side: const BorderSide(color: Colors.white),
+//                           ),
+//                           activeColor: Colors.lightBlue,
+//                         );
+//                       },
+
+                    child: SingleChildScrollView(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        // Ensure ListView doesn't try to take all available space
+                        physics: NeverScrollableScrollPhysics(),
+                        // Disable ListView scroll since we have a parent scroll
+                        itemCount: controller.foodList.length,
+                        itemBuilder: (context, index) {
+                          final food = controller.foodList[index];
+                          return CheckboxListTile(
+                            title: Text(food.foodName),
+                            subtitle: Text("Calories: ${food.calories}"),
+                            value: controller.selectedItems[index],
+                            onChanged: (bool? isSelected) {
+                              controller.selectedItems[index] =
+                                  isSelected ?? false;
+                              // controller.update();
+                             setState((){});
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),

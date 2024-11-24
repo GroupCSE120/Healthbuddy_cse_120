@@ -11,6 +11,7 @@ class FoodListController extends GetxController{
   HomeController obj = HomeController();
 
 
+
   @override
   void onInit() {
     foodList = Get.find<HomeController>().foodList;
@@ -25,11 +26,15 @@ class FoodListController extends GetxController{
     // getFoodItemList();
   }
 
-  // void getFoodItemList() async{
-  //   foodList = await _loadData.getCsvData();
-  //   selectedItems = List<bool>.filled(foodList.length,false);
-  //   update();
-  // }
+
+
+
+  void getFoodItemList() async{
+    foodList = Get.find<HomeController>().foodList;
+    selectedItems = List<bool>.filled(foodList.length,false);
+    update();
+  }
+
 
 
   void createFoodList(String title){
