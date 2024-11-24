@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_buddy/Modals/food_modal.dart';
@@ -33,6 +35,10 @@ class HomeController extends GetxController {
   DateTime currentDate = DateTime.now();
 
   final LoadData _loadData = LoadData();
+  final TextEditingController searchController = TextEditingController();
+
+  List<List<FoodModal>> userCustomFoodLists = [];
+  List<String> userCustomFoodListTitles = [];
 
   @override
   void onInit() {
@@ -93,6 +99,8 @@ class HomeController extends GetxController {
     getDinnerFoodData(DateTime.now());
     getLunchFoodData(DateTime.now());
 
+    getCustomList();
+
     update();
   }
 
@@ -151,6 +159,23 @@ class HomeController extends GetxController {
     dinnerItems = _loadData.returnListFromIds(list);
     print("$list =============================> $dinnerItems");
     update();
+  }
+
+  void getCustomList() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    userCustomFoodListTitles =
+        sharedPreferences.getStringList("userCustomFoodListTitles") ?? [];
+    List<String> userFoodListsJson =
+        sharedPreferences.getStringList('userCustomFoodList') ?? [];
+
+    // Convert back to List<List<FoodModal>>
+    userCustomFoodLists.clear();
+    userCustomFoodLists.addAll(userFoodListsJson.map((listJson) {
+      List<dynamic> decodedList = jsonDecode(listJson);
+      return decodedList
+          .map((foodJson) => FoodModal.fromJson(foodJson))
+          .toList();
+    }));
   }
 
   void setListData(List<FoodModal> list, String key) async {
@@ -267,8 +292,11 @@ class HomeController extends GetxController {
 
   void selectFood(int mealCount) async {
     List<FoodModal> tempList = foodList; // Default list
+    List<FoodModal> filteredList =
+        List.from(tempList); // Filtered list for search
     String tempListName = "All Food List"; // Default dropdown value
     Map<String, int> itemCount = {};
+    TextEditingController searchController = TextEditingController();
 
     for (var item in getMealList(mealCount)) {
       itemCount[item.foodName] = (itemCount[item.foodName] ?? 0) + 1;
@@ -300,42 +328,37 @@ class HomeController extends GetxController {
                       ),
                     ),
                     DropdownButton(
-                      items: const [
-                        DropdownMenuItem(
+                      items: [
+                        const DropdownMenuItem(
                           value: "All Food List",
                           child: Text("All Food List"),
                         ),
-                        DropdownMenuItem(
-                          value: "Favorite List",
-                          child: Text("Favorite List"),
-                        ),
-                        DropdownMenuItem(
-                          value: "Breakfast List",
-                          child: Text("Breakfast List"),
-                        ),
-                        DropdownMenuItem(
-                          value: "Lunch List",
-                          child: Text("Lunch List"),
-                        ),
-                        DropdownMenuItem(
-                          value: "Dinner List",
-                          child: Text("Dinner List"),
+                        ...List.generate(
+                          userCustomFoodListTitles.length,
+                          (index) {
+                            return DropdownMenuItem(
+                              value: userCustomFoodListTitles[index],
+                              child: Text(userCustomFoodListTitles[index]),
+                            );
+                          },
                         ),
                       ],
                       onChanged: (value) {
                         setState(() {
                           if (value == "All Food List") {
                             tempList = foodList;
-                          } else if (value == "Favorite List") {
-                            tempList = commonFavouriteListItems;
-                          } else if (value == "Breakfast List") {
-                            tempList = commonBreakfastListItems;
-                          } else if (value == "Lunch List") {
-                            tempList = commonLunchListItems;
-                          } else if (value == "Dinner List") {
-                            tempList = commonDinnerListItems;
+                          } else {
+                            for (int i = 0;
+                                i < userCustomFoodListTitles.length;
+                                i++) {
+                              if (value == userCustomFoodListTitles[i]) {
+                                tempList = userCustomFoodLists[i];
+                              }
+                            }
                           }
                           tempListName = value!;
+                          filteredList =
+                              List.from(tempList); // Reset filtered list
                         });
                         print("Selected: $value");
                       },
@@ -346,8 +369,48 @@ class HomeController extends GetxController {
                     ),
                   ],
                 ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
+                  child: TextFormField(
+                    controller: searchController,
+                    onChanged: (query) {
+                      setState(() {
+                        filteredList = tempList
+                            .where((item) => item.foodName
+                                .toLowerCase()
+                                .contains(query.toLowerCase()))
+                            .toList();
+                      });
+                    },
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: "Search Food",
+                      prefixIcon: const Icon(Icons.search, color: Colors.white),
+                      labelStyle: const TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        borderSide: BorderSide(
+                          color: AppColors.lightBlue,
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        borderSide: BorderSide(
+                          color: AppColors.lightBlue,
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 ...List.generate(
-                  tempList.length,
+                  filteredList.length,
                   (index) {
                     return Container(
                       padding: const EdgeInsets.all(15),
@@ -373,7 +436,7 @@ class HomeController extends GetxController {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    tempList[index].foodName,
+                                    filteredList[index].foodName,
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -381,7 +444,7 @@ class HomeController extends GetxController {
                                     ),
                                   ),
                                   Text(
-                                    "Calories: ${tempList[index].calories}",
+                                    "Calories: ${filteredList[index].calories}",
                                     style: const TextStyle(
                                       color: Colors.white54,
                                       fontWeight: FontWeight.normal,
@@ -389,7 +452,7 @@ class HomeController extends GetxController {
                                     ),
                                   ),
                                   Text(
-                                    "Proteins: ${tempList[index].protiens}",
+                                    "Proteins: ${filteredList[index].protiens}",
                                     style: const TextStyle(
                                       color: Colors.white54,
                                       fontWeight: FontWeight.normal,
@@ -397,7 +460,7 @@ class HomeController extends GetxController {
                                     ),
                                   ),
                                   Text(
-                                    "Fats: ${tempList[index].fats}",
+                                    "Fats: ${filteredList[index].fats}",
                                     style: const TextStyle(
                                       color: Colors.white54,
                                       fontWeight: FontWeight.normal,
@@ -416,9 +479,10 @@ class HomeController extends GetxController {
                                 color: Colors.limeAccent.shade200,
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              child: itemCount[tempList[index].foodName] !=
+                              child: itemCount[filteredList[index].foodName] !=
                                           null &&
-                                      itemCount[tempList[index].foodName]! > 0
+                                      itemCount[filteredList[index].foodName]! >
+                                          0
                                   ? Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -427,10 +491,11 @@ class HomeController extends GetxController {
                                           onTap: () {
                                             setState(() {
                                               removeItemsToMealList(
-                                                  tempList[index], mealCount);
-                                              itemCount[tempList[index]
+                                                  filteredList[index],
+                                                  mealCount);
+                                              itemCount[filteredList[index]
                                                   .foodName] = (itemCount[
-                                                          tempList[index]
+                                                          filteredList[index]
                                                               .foodName]! -
                                                       1)
                                                   .clamp(0, double.infinity)
@@ -443,7 +508,7 @@ class HomeController extends GetxController {
                                           ),
                                         ),
                                         Text(
-                                          "${itemCount[tempList[index].foodName]}",
+                                          "${itemCount[filteredList[index].foodName]}",
                                           style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold),
@@ -452,10 +517,11 @@ class HomeController extends GetxController {
                                           onTap: () {
                                             setState(() {
                                               addItemsToMealList(
-                                                  tempList[index], mealCount);
-                                              itemCount[tempList[index]
+                                                  filteredList[index],
+                                                  mealCount);
+                                              itemCount[filteredList[index]
                                                   .foodName] = (itemCount[
-                                                          tempList[index]
+                                                          filteredList[index]
                                                               .foodName] ??
                                                       0) +
                                                   1;
@@ -472,12 +538,13 @@ class HomeController extends GetxController {
                                       onTap: () {
                                         setState(() {
                                           addItemsToMealList(
-                                              tempList[index], mealCount);
-                                          itemCount[tempList[index].foodName] =
-                                              (itemCount[tempList[index]
+                                              filteredList[index], mealCount);
+                                          itemCount[filteredList[index]
+                                              .foodName] = (itemCount[
+                                                      filteredList[index]
                                                           .foodName] ??
-                                                      0) +
-                                                  1;
+                                                  0) +
+                                              1;
                                         });
                                       },
                                       child: const Icon(
