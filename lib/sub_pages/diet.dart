@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_buddy/Modals/food_modal.dart';
 import 'package:health_buddy/constants/app_color.dart';
+import 'package:health_buddy/extension/method_extensions.dart';
 
 import '../Controllers/home_controller.dart';
 
@@ -17,6 +18,35 @@ class Diet extends StatelessWidget {
           backgroundColor: AppColors.bgColor,
           body: ListView(
             children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () => controller.moveToPreviousDate(),
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      controller.currentDate.toFormattedString() == DateTime.now().toFormattedString() ? "Today" : controller.currentDate.toFormattedString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => controller.moveToNextDate(),
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -90,9 +120,8 @@ class Diet extends StatelessWidget {
                               controller.selectedGoal == "Calories"
                                   ? controller.foodCalories.toString()
                                   : controller.selectedGoal == "Protein"
-                                  ? controller.foodProtein.toString()
-                                  : controller.foodProtein.toString(),
-
+                                      ? controller.foodProtein.toString()
+                                      : controller.foodProtein.toString(),
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
