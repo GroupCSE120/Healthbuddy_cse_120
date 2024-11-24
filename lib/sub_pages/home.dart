@@ -71,9 +71,7 @@ class Home extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20),
                         Container(
                           decoration: BoxDecoration(
                             border: Border.all(
@@ -93,203 +91,48 @@ class Home extends StatelessWidget {
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                 ),
-
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 145,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: Colors.grey.shade800
-                                                  .withOpacity(0.5)),
-                                          padding: const EdgeInsets.all(12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              const Icon(
-                                                Icons.height,
-
-                              ),
-                              const SizedBox(
-                                height: 15,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 145,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(20),
-                                            color: Colors.grey.shade800
-                                                .withOpacity(0.5)),
-                                        padding: const EdgeInsets.all(12),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          children: [
-                                            const Icon(
-                                              Icons.height,
-                                              color: Colors.white,
-                                              size: 35,
-                                            ),
-                                            Text(
-                                              '${controller.user.height}',
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 30,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Text(
-                                        'Height (cm)',
-                                        style: TextStyle(
-                                          color: Colors.white70,
-                                          fontSize: 13,
-                                        ),
-
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 145,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: Colors.grey.shade800
-                                                  .withOpacity(0.5)),
-                                          padding: const EdgeInsets.all(12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              const Icon(
-                                                Icons.fitness_center,
-
-                                      ),
-                                    ],
+                                  _buildStatCard(
+                                    context,
+                                    icon: Icons.height,
+                                    value: '${controller.user.height}',
+                                    label: 'Height (cm)',
                                   ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 145,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(20),
-                                            color: Colors.grey.shade800
-                                                .withOpacity(0.5)),
-                                        padding: const EdgeInsets.all(12),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          children: [
-                                            const Icon(
-                                              Icons.fitness_center,
-                                              color: Colors.white,
-                                              size: 35,
-                                            ),
-                                            Text(
-                                              '${controller.user.weight}',
-                                              style: const TextStyle(
-
-                                                color: Colors.white,
-                                                fontSize: 30,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Text(
-                                        'Weight (kg)',
-                                        style: TextStyle(
-                                          color: Colors.white70,
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                    ],
+                                  _buildStatCard(
+                                    context,
+                                    icon: Icons.fitness_center,
+                                    value: '${controller.user.weight}',
+                                    label: 'Weight (kg)',
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 15,
-                              ),
+                              const SizedBox(height: 15),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "BMI : ${controller.bmi.toString().substring(0,5)}",
+                                    "BMI : ${controller.bmi.toString().substring(0, 5)}",
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,
                                     ),
-
-                                    IconButton(
-                                      onPressed: () {
-                                        controller.bmiBottomSheet();
-                                      },
-                                      icon: Icon(Icons.help_outline_rounded,
-                                          color:
-                                              Colors.lightBlueAccent.shade100),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Text(
-                                  "Status: ${controller.status}",
-                                  style: TextStyle(
-                                    color: AppColors.lightBlue,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.normal,
-
-
                                   ),
                                   IconButton(
                                     onPressed: () {
                                       controller.bmiBottomSheet();
                                     },
-                                    icon: Icon(Icons.help,
-                                        color: Colors.lightBlueAccent.shade100
-                                            .withAlpha(500)),
+                                    icon: Icon(
+                                      Icons.help_outline_rounded,
+                                      color: Colors.lightBlueAccent.shade100,
+                                    ),
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 15,
-                              ),
+                              const SizedBox(height: 15),
                               Text(
                                 "Status: ${controller.status}",
                                 style: TextStyle(
@@ -301,45 +144,52 @@ class Home extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: 10,),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white70, width: 1.0, ),
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: AppColors.cardColor,
-                          ),
-                          child: CarouselSlider(
-                              items: controller.foodList.map((i){
-                                return Builder(
-                                    builder: (context){
-                                      return Container(
-                                        width: MediaQuery.of(context).size.width,
-                                        margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.amber
-                                        ),
-                                        child: Text("text : ${i.foodName}"),
-                                      );
-                                    },
+                        const SizedBox(height: 10),
+                        CarouselSlider(
+                          items: controller.foodList.map((i) {
+                            return Builder(
+                              builder: (context) {
+                                return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade800,
+                                    border: Border.all(color: AppColors.lightBlue, width: 1.5,),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text("${i.foodName}", style: TextStyle(color: Colors.white, fontSize: 24,fontWeight: FontWeight.bold),),
+                                      Text("Glycemic Index : ${i.glycemicIndex}", style: TextStyle(color: Colors.white70),),
+                                      Text("Calories : ${i.calories} cal.", style: TextStyle(color: Colors.white70),),
+                                      Text("Proteins : ${i.protiens} g.", style: TextStyle(color: Colors.white70),),
+                                      Text("Fats : ${i.fats} g.", style: TextStyle(color: Colors.white70),),
+                                      Text("Carbohydrates : ${i.carbohydrates} g.", style: TextStyle(color: Colors.white70),),
+                                      Text("Sodium (Na) : ${i.sodium} g.", style: TextStyle(color: Colors.white70),),
+                                      Text("Potassium (K) : ${i.pottasium} g.", style: TextStyle(color: Colors.white70),),
+                                      Text("Magnesium (Mg) : ${i.magnesium} g.", style: TextStyle(color: Colors.white70),),
+                                    ],
+                                  ),
                                 );
-                              }).toList(),
-                              options: CarouselOptions(
-                                height: 400,
-                                aspectRatio: 16/9,
-                                viewportFraction: 0.8,
-                                initialPage: 0,
-                                enableInfiniteScroll: true,
-                                reverse: false,
-                                autoPlay: true,
-                                autoPlayInterval: Duration(seconds: 3),
-                                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                enlargeCenterPage: true,
-                                enlargeFactor: 0.3,
-                                // onPageChanged: callbackFunction,
-                                scrollDirection: Axis.horizontal,
-                              )),
-                        )
+                              },
+                            );
+                          }).toList(),
+                          options: CarouselOptions(
+                            height: 250,
+                            aspectRatio: 18 / 9,
+                            viewportFraction: 0.8,
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: true,
+                            autoPlayInterval: const Duration(seconds: 3),
+                            autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enlargeCenterPage: true,
+                            enlargeFactor: 0.2,
+                            scrollDirection: Axis.horizontal,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -348,9 +198,42 @@ class Home extends StatelessWidget {
             ),
           );
         } else {
-          return const Center(child: CircularProgressIndicator(),);
+          return const Center(child: CircularProgressIndicator());
         }
       },
+    );
+  }
+
+  Widget _buildStatCard(BuildContext context, {required IconData icon, required String value, required String label}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 145,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.grey.shade800.withOpacity(0.5),
+          ),
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: Colors.white, size: 35),
+              const SizedBox(width: 8),
+              Text(
+                value,
+                style: const TextStyle(color: Colors.white, fontSize: 30),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          label,
+          style: const TextStyle(color: Colors.white70, fontSize: 13),
+        ),
+      ],
     );
   }
 }

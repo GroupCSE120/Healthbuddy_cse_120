@@ -87,7 +87,12 @@ class Diet extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              controller.foodCalories.toString(),
+                              controller.selectedGoal == "Calories"
+                                  ? controller.foodCalories.toString()
+                                  : controller.selectedGoal == "Protein"
+                                  ? controller.foodProtein.toString()
+                                  : controller.foodProtein.toString(),
+
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -112,8 +117,8 @@ class Diet extends StatelessWidget {
                               controller.selectedGoal == "Calories"
                                   ? '${controller.goalsCalories - controller.foodCalories}'
                                   : controller.selectedGoal == "Protein"
-                                      ? '${controller.goalsProteins - controller.foodCalories}'
-                                      : '${controller.goalsFats - controller.foodCalories}',
+                                      ? '${controller.goalsProteins - controller.foodProtein}'
+                                      : '${controller.goalsFats - controller.foodFats}',
                               style: TextStyle(
                                 color: AppColors.lightBlue,
                                 fontSize: 20,

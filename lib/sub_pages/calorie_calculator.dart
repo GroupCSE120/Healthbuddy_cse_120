@@ -140,6 +140,7 @@ class _CalorieCalculatorState extends State<CalorieCalculator> {
                 ),
 
                 const SizedBox(height: 20),
+                Text("Select  accordingly based on your daily activity", style: TextStyle(color: Colors.white),),
 
                 // PAL Selection
                 DropdownButton<double>(
@@ -147,11 +148,12 @@ class _CalorieCalculatorState extends State<CalorieCalculator> {
                   style: const TextStyle(color: Colors.white),
                   borderRadius: BorderRadius.circular(25),
                   dropdownColor: AppColors.cardColor,
+                  hint: Text("select accordingly based on your daily activity", style: TextStyle(color: Colors.white),),
                   isExpanded: true,
                   items: const [
                     DropdownMenuItem(
                       value: 1.2,
-                      child: Text('Sedentary (1.2)'),
+                      child: Text('Sedentary / No Activity  (1.2) '),
                     ),
                     DropdownMenuItem(
                       value: 1.375,
@@ -207,10 +209,22 @@ class _CalorieCalculatorState extends State<CalorieCalculator> {
 
                 // Display Result
                 if (TDEE > 0)
-                  Text(
-                    'Your Total Daily Energy Expenditure (TDEE) is: ${TDEE.toStringAsFixed(2)} Calories',
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        textAlign: TextAlign.center,
+                        'Your Total Daily Energy Expenditure (TDEE) is:',
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                      Text(
+                        '${TDEE.toStringAsFixed(2)} Calories',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.lightBlue ),
+                      ),
+                    ],
                   ),
               ],
             ),

@@ -56,7 +56,4 @@ class FoodListController extends GetxController{
 
   void updateFoodList(String listname){}
 
-
-
-
 }

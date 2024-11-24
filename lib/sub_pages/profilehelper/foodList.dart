@@ -27,7 +27,6 @@ class Foodlist extends StatelessWidget {
             : Container(
                 color: AppColors.cardColor,
                 child: ListView.builder(
-
                   itemCount: controller.userFoodLists.length,
                   itemBuilder: (context, index) {
                     final foodList = controller.userFoodLists[index];
@@ -35,14 +34,6 @@ class Foodlist extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         padding: const EdgeInsets.all(2.0),
-
-                  itemCount: controller.foodLists.length,
-                  itemBuilder: (context, index) {
-                    final foodList = controller.foodLists[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        padding: EdgeInsets.all(2.0),
                         decoration: BoxDecoration(
                           border: Border.all(
                               color: AppColors.lightBlue, width: 1.0),
@@ -51,18 +42,12 @@ class Foodlist extends StatelessWidget {
                         child: ListTile(
                           title: Text(
                             "${index + 1}: ${controller.listTitles[index]}",
-
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 18),
                           ),
                           subtitle: Text(
                             "Items: ${foodList.length}",
-                            style: const TextStyle(color: Colors.white70),
                             style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
-                          subtitle: Text(
-                            "Items: ${foodList.length}",
-                            style: TextStyle(color: Colors.white70),
                           ),
                           onTap: () {
                             // Show details of the list
@@ -145,9 +130,6 @@ class Foodlist extends StatelessWidget {
       backgroundColor: AppColors.cardColor,
       builder: (context) {
         return StatefulBuilder(
-          builder: (context, setState) {
-      builder: (context) {
-        return StatefulBuilder(
           builder:
               (BuildContext context, void Function(void Function()) setState) {
             return Padding(
@@ -162,7 +144,6 @@ class Foodlist extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-
                       color: Colors.white,
                     ),
                   ),
@@ -171,14 +152,10 @@ class Foodlist extends StatelessWidget {
                     controller: titleController,
                     decoration: const InputDecoration(
                       labelText: "List Title",
-
                       labelStyle: TextStyle(color: Colors.white70),
                       border: OutlineInputBorder(),
                     ),
                     style: const TextStyle(color: Colors.white),
-
-                      border: OutlineInputBorder(),
-                    ),
                   ),
                   const SizedBox(height: 16),
                   // Use SingleChildScrollView to prevent layout issues in case the list is too long
@@ -228,7 +205,7 @@ class Foodlist extends StatelessWidget {
                               controller.selectedItems[index] =
                                   isSelected ?? false;
                               // controller.update();
-                             setState((){});
+                              setState(() {});
                             },
                           );
                         },
