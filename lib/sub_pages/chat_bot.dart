@@ -74,7 +74,7 @@ class _ChatBotState extends State<ChatBot> with SingleTickerProviderStateMixin {
     await _saveMessagesToPreferences(); // Save messages after user input
 
     const String togetherApiKey =
-        "81ae561ed7fe920dd7d30a96b82a793feab87f4e3c1cb138d6283f3df5e1e3a8";
+        "your_together_api_key";
 
     try {
       final response = await http.post(
