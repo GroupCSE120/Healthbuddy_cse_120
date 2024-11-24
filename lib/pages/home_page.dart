@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
               Icons.home_filled,
               Icons.food_bank,
               Icons.calculate,
-              Icons.chat,
+              Icons.live_help,
               Icons.person_rounded,
             ],
             activeIndex: controller.currentPageIndex,
