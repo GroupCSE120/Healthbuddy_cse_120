@@ -192,7 +192,7 @@ class Foodlist extends StatelessWidget {
                       child: ListView.builder(
                         shrinkWrap: true,
                         // Ensure ListView doesn't try to take all available space
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         // Disable ListView scroll since we have a parent scroll
                         itemCount: controller.foodList.length,
                         itemBuilder: (context, index) {
