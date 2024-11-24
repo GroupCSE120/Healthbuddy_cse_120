@@ -161,56 +161,57 @@ class Foodlist extends StatelessWidget {
                   // Use SingleChildScrollView to prevent layout issues in case the list is too long
                   SizedBox(
                     height: 300, // Set a height to ensure content is scrollable
-//                     child: ListView.builder(
-//                       itemCount: controller.foodList.length,
-//                       itemBuilder: (context, index) {
-//                         final food = controller.foodList[index];
-//                         return CheckboxListTile(
-//                           title: Text(
-//                             food.foodName,
-//                             style: const TextStyle(color: Colors.white),
-//                           ),
-//                           subtitle: Text(
-//                             "Calories: ${food.calories}",
-//                             style: const TextStyle(color: Colors.white),
-//                           ),
-//                           value: controller.selectedItems[index],
-//                           onChanged: (bool? isSelected) {
-//                             controller.selectedItems[index] =
-//                                 isSelected ?? false;
-//                             setState(() {});
-//                           },
-//                           checkboxShape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(25),
-//                             side: const BorderSide(color: Colors.white),
-//                           ),
-//                           activeColor: Colors.lightBlue,
-//                         );
-//                       },
+                    child: ListView.builder(
+                      itemCount: controller.foodList.length,
+                      itemBuilder: (context, index) {
+                        final food = controller.foodList[index];
+                        return CheckboxListTile(
+                          title: Text(
+                            food.foodName,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          subtitle: Text(
+                            "Calories: ${food.calories}",
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          value: controller.selectedItems[index],
+                          onChanged: (bool? isSelected) {
+                            controller.selectedItems[index] =
+                                isSelected ?? false;
+                            setState(() {});
+                          },
+                          checkboxShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            side: const BorderSide(color: Colors.white),
+                          ),
+                          activeColor: Colors.lightBlue,
+                        );
+                      },
 
-                    child: SingleChildScrollView(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        // Ensure ListView doesn't try to take all available space
-                        physics: const NeverScrollableScrollPhysics(),
-                        // Disable ListView scroll since we have a parent scroll
-                        itemCount: controller.foodList.length,
-                        itemBuilder: (context, index) {
-                          final food = controller.foodList[index];
-                          return CheckboxListTile(
-                            title: Text(food.foodName),
-                            subtitle: Text("Calories: ${food.calories}"),
-                            value: controller.selectedItems[index],
-                            onChanged: (bool? isSelected) {
-                              controller.selectedItems[index] =
-                                  isSelected ?? false;
-                              // controller.update();
-                              setState(() {});
-                            },
-                          );
-                        },
-                      ),
-                    ),
+                    // child: SingleChildScrollView(
+                    //   child: ListView.builder(
+                    //     shrinkWrap: true,
+                    //     // Ensure ListView doesn't try to take all available space
+                    //     physics: const NeverScrollableScrollPhysics(),
+                    //     // Disable ListView scroll since we have a parent scroll
+                    //     itemCount: controller.foodList.length,
+                    //     itemBuilder: (context, index) {
+                    //       final food = controller.foodList[index];
+                    //       return CheckboxListTile(
+                    //         title: Text(food.foodName),
+                    //         subtitle: Text("Calories: ${food.calories}"),
+                    //         value: controller.selectedItems[index],
+                    //         onChanged: (bool? isSelected) {
+                    //           controller.selectedItems[index] =
+                    //               isSelected ?? false;
+                    //           // controller.update();
+                    //           setState(() {});
+                    //         },
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
+                  ),
                   ),
                   const SizedBox(height: 16),
                   Row(

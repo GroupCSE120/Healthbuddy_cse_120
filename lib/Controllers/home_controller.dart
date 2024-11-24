@@ -30,6 +30,7 @@ class HomeController extends GetxController {
   int goalsCalories = 0;
   int goalsProteins = 0;
   int goalsFats = 0;
+  DateTime currentDate = DateTime.now();
 
   final LoadData _loadData = LoadData();
 
@@ -100,6 +101,24 @@ class HomeController extends GetxController {
 
     getUserData();
     isLoading = false;
+    update();
+  }
+
+  void moveToNextDate() {
+    if (currentDate.toFormattedString() != DateTime.now().toFormattedString()) {
+      currentDate = currentDate.add(const Duration(days: 1));
+    }
+    getBreakfastFoodData(currentDate);
+    getDinnerFoodData(currentDate);
+    getLunchFoodData(currentDate);
+    update();
+  }
+
+  void moveToPreviousDate() {
+    currentDate = currentDate.subtract(const Duration(days: 1));
+    getBreakfastFoodData(currentDate);
+    getDinnerFoodData(currentDate);
+    getLunchFoodData(currentDate);
     update();
   }
 
