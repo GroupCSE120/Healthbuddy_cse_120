@@ -29,6 +29,7 @@ class SqlDatabaseService {
   final String _columnSugarName = "sugar";
   final String _columnBPName = "bp";
   final String _columnTimeStampName = "timestamp";
+  final String _columnTempRateName = 'temp_rate';
 
   Future<Database> get database1 async {
     if (_db1 != null) return _db1!;
@@ -73,6 +74,7 @@ class SqlDatabaseService {
             $_columnSugarName INTEGER NOT NULL,
             $_columnBPName INTEGER NOT NULL,
             $_columnTimeStampName INTEGER NOT NULL,
+            $_columnTempRateName INTEGER NOT NULL,
             date TEXT NOT NULL,
           )
           ''');
@@ -103,7 +105,8 @@ class SqlDatabaseService {
             fiber: e[_columnFiberName] as double,
             sugar: e[_columnSugarName] as int == 1,
             bp: e[_columnBPName] as int == 1,
-            id: e[_columnIdName] as int
+            id: e[_columnIdName] as int,
+            tempRate: e[_columnTempRateName] as int
           ),
         )
         .toList();

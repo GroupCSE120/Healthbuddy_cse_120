@@ -8,6 +8,7 @@ class Foodlist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController tempController = TextEditingController();
     return GetBuilder<FoodListController>(builder: (controller) {
       return Scaffold(
         appBar: AppBar(
@@ -19,105 +20,139 @@ class Foodlist extends StatelessWidget {
           backgroundColor: Colors.blue.shade900,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-        body: controller.userFoodLists.isEmpty
-            ? Container(
-                color: AppColors.bgColor,
-                child: const Center(
-                  child: Text(
-                    "No Lists Created Yet",
-                    style: TextStyle(fontSize: 15, color: Colors.white70),
-                  ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const Text("Please enter your temperature: "),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                textAlign: TextAlign.center,
+                controller: tempController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter your current body tempreature (°C)',
                 ),
-              )
-            : Container(
-                color: AppColors.bgColor,
-                child: ListView.builder(
-                  itemCount: controller.userFoodLists.length,
-                  itemBuilder: (context, index) {
-                    final foodList = controller.userFoodLists[index];
-                    return Card(
-                      elevation: 20,
-                      color: AppColors.cardColor,
-                      child: ListTile(
-                        title: Text(
-                          "${index + 1}. ${controller.listTitles[index]}",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
+                onSubmitted: (value) {
+                  double? temp = double.tryParse(value);
+                  if(temp != null){
+                    controller.refineFoodListByTempreature(temp);
+                  }else{
+                    Get.snackbar(
+                      "Invalid Input",
+                      "Please enter a valid number.",
+                      snackPosition: SnackPosition.BOTTOM,
+                    );
+                  }
+                },
+              ),
+            ),
+            Expanded(
+              child: controller.userFoodLists.isEmpty
+                  ? Container(
+                      color: AppColors.bgColor,
+                      child: const Center(
+                        child: Text(
+                          "No Lists Created Yet",
+                          style: TextStyle(fontSize: 15, color: Colors.white70),
                         ),
-                        subtitle: Text(
-                          "Items: ${foodList.length}",
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        onTap: () {
-                          // Show details of the list
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: AppColors.cardColor,
-                            // Allow the bottom sheet to expand based on content
-                            builder: (context) {
-                              return Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  // Ensure it takes only as much space as needed
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Displaying the list title
-                                    Padding(
-                                      padding: const EdgeInsets.all(15),
-                                      child: Text(
-                                        "List Name: ${controller.listTitles[index]}",
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 16),
-
-                                    SizedBox(
-                                      height: 300,
-                                      // Set a fixed height to ensure scrollable content
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: foodList.length,
-                                        itemBuilder: (context, foodIndex) {
-                                          final food = foodList[foodIndex];
-                                          return ListTile(
-                                            title: Text(
-                                              food.foodName,
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                            subtitle: Text(
-                                              "Calories: ${food.calories}",
-                                              style: const TextStyle(
-                                                  color: Colors.white70,
-                                                  fontSize: 12),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
+                      ),
+                    )
+                  : Container(
+                      color: AppColors.bgColor,
+                      child: ListView.builder(
+                        itemCount: controller.userFoodLists.length,
+                        itemBuilder: (context, index) {
+                          final foodList = controller.userFoodLists[index];
+                          return Card(
+                            elevation: 20,
+                            color: AppColors.cardColor,
+                            child: ListTile(
+                              title: Text(
+                                "${index + 1}. ${controller.listTitles[index]}",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
                                 ),
-                              );
-                            },
+                              ),
+                              subtitle: Text(
+                                "Items: ${foodList.length}",
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              onTap: () {
+                                // Show details of the list
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  backgroundColor: AppColors.cardColor,
+                                  // Allow the bottom sheet to expand based on content
+                                  builder: (context) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        // Ensure it takes only as much space as needed
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          // Displaying the list title
+                                          Padding(
+                                            padding: const EdgeInsets.all(15),
+                                            child: Text(
+                                              "List Name: ${controller.listTitles[index]}",
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 16),
+              
+                                          SizedBox(
+                                            height: 300,
+                                            // Set a fixed height to ensure scrollable content
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: foodList.length,
+                                              itemBuilder: (context, foodIndex) {
+                                                final food = foodList[foodIndex];
+                                                return ListTile(
+                                                  title: Text(
+                                                    food.foodName,
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  subtitle: Text(
+                                                    "Calories: ${food.calories}",
+                                                    style: const TextStyle(
+                                                        color: Colors.white70,
+                                                        fontSize: 12),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
                           );
                         },
                       ),
-                    );
-                  },
-                ),
-              ),
+                    ),
+            ),
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             _showCreateListModal(context, controller);
@@ -151,13 +186,23 @@ class Foodlist extends StatelessWidget {
                 children: [
                   const Padding(
                     padding: EdgeInsets.all(12),
-                    child: Text(
-                      "Create New List",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Create New List",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          "Recommended food items based on your body temperature",
+                          style: TextStyle(color: Colors.white60),
+                        )
+                      ],
                     ),
                   ),
                   const SizedBox(height: 16),

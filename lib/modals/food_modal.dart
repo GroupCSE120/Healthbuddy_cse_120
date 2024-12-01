@@ -13,6 +13,7 @@ class FoodModal {
   bool sugar;
   bool bp;
   int id;
+  int tempRate;
 
   FoodModal({
     required this.foodName,
@@ -29,6 +30,7 @@ class FoodModal {
     required this.sugar,
     required this.bp,
     required this.id,
+    required this.tempRate,
   });
 
   // Convert object to JSON
@@ -48,6 +50,7 @@ class FoodModal {
       'sugar': sugar,
       'bp': bp,
       'id': id,
+      'temp_rate' : tempRate,
     };
   }
 
@@ -68,6 +71,7 @@ class FoodModal {
       sugar: json['sugar'],
       bp: json['bp'],
       id: json['id'],
+      tempRate: json['temp_rate'],
     );
   }
 }

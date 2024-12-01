@@ -40,6 +40,10 @@ class LoadData {
           sugar: row[6].toString() == "1",
           bp: row[7].toString() == "1",
           id: int.parse(row[13].toString()),
+          tempRate: int.parse(row[14].toString()),
+
+
+
         ));
       } catch (e) {
         print("Error parsing row $i: $e");
